@@ -17,14 +17,14 @@ AppKeto te permite entre otras cosas:
 -Ruby
 -Postgresql
 
-## Diagrama Conceptual:
-
-![Diagrama Conceptual](https://github.com/emanuelcortezr/Mi-Keto/blob/master/public/images/Diagrama%20l%C3%B3gico.png)
-
-
 ## Diagrama Lógico:
 
-![Diagrama Lógico](https://github.com/emanuelcortezr/Mi-Keto/blob/master/public/images/Diagrama%20conceptual.png)
+![Diagrama Lógico](https://github.com/emanuelcortezr/Mi-Keto/blob/master/public/images/Diagrama%20l%C3%B3gico.png)
+
+
+## Diagrama Conceptual:
+
+![Diagrama Conceptual](https://github.com/emanuelcortezr/Mi-Keto/blob/master/public/images/Diagrama%20conceptual.png)
 
 ## Link al tablero:
 https://trello.com/b/1yhwl4Iv/aplicacion-ceto
