@@ -16,3 +16,29 @@ AppKeto te permite entre otras cosas:
 -Rails
 -Ruby
 -Postgresql
+
+## Diagrama Conceptual:
+
+![Diagrama Conceptual](https://github.com/emanuelcortezr/Mi-Keto/blob/master/public/images/Diagrama%20l%C3%B3gico.png)
+
+
+## Diagrama Lógico:
+
+![Diagrama Lógico](https://github.com/emanuelcortezr/Mi-Keto/blob/master/public/images/Diagrama%20conceptual.png)
+
+## Link al tablero:
+https://trello.com/b/1yhwl4Iv/aplicacion-ceto
+
+## Link al Proyecto en Heroku:
+https://mi-keto.herokuapp.com/
+
+## Instrucciones para correr el proyecto en local:
+> Debe clonar el repositorio. En esta misma página encontrará el url para clonar el proyecto.
+> Una vez copiado el link para clonar el proyecto, por consola copiar el siguiente comando: git clone url_github_proyecto
+> Ingresar al directorio del proyecto con (cd nombre_proyecto) y por consola instalar las dependencias: bundle install.
+> Una vez instaladas las dependencias, colocar el siguiente comando en la consola para arrancar el proyecto: rails s
+
+
+
+
+
