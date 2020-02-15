@@ -33,10 +33,10 @@ https://trello.com/b/1yhwl4Iv/aplicacion-ceto
 https://mi-keto.herokuapp.com/
 
 ## Instrucciones para correr el proyecto en local:
-> Debe clonar el repositorio. En esta misma página encontrará el url para clonar el proyecto.
-> Una vez copiado el link para clonar el proyecto, por consola copiar el siguiente comando: git clone url_github_proyecto
-> Ingresar al directorio del proyecto con (cd nombre_proyecto) y por consola instalar las dependencias: bundle install.
-> Una vez instaladas las dependencias, colocar el siguiente comando en la consola para arrancar el proyecto: rails s
+-  Debe clonar el repositorio. En esta misma página encontrará el url para clonar el proyecto.
+-  Una vez copiado el link para clonar el proyecto, por consola copiar el siguiente comando: git clone url_github_proyecto
+-  Ingresar al directorio del proyecto con (cd nombre_proyecto) y por consola instalar las dependencias: bundle install.
+-  Una vez instaladas las dependencias, colocar el siguiente comando en la consola para arrancar el proyecto: rails s
 
 
 
