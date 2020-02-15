@@ -1,24 +1,18 @@
-# README
+# Bienvenido a  MiKeto!
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+ **MiKeto** es una aplicacion que le permite a los que llevan un estilo de vida ceto, contar con una herramienta de alimentacion que le facilitara la tarea de organizar su dieta. Mas adelante dare detalles.
 
-Things you may want to cover:
 
-* Ruby version
+# Descripcion general:
 
-* System dependencies
+AppKeto te permite entre otras cosas:
+-Podras crear susu pautas semanales de alimentacion.
+-Buscar una receta que se adapte a los ingredientes con los que cuentes en la despensa.
+-Te permite adaptar tu pauta semanal de alimentacion, a los ayunos que planifique.
+-Podras acceder al listado de productos que debes adquirir deacuerdo a las pautas semanales de alimentacion.
 
-* Configuration
+## Tecnologias empleadas:
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+-Rails
+-Ruby
+-Postgresql
