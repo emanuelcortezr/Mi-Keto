@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Autenticación</title>
+        <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    </head>
+<style>
+.bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+}
+</style>
+    <body>
+        <img class="bg" src="/images/fruit-salads-in-plate-1640774.jpg" alt="rss feed" />
+        <%= yield %>
+    </body>
+</html>
