@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  recipe: one
+  ingredient: one
+  measure_unit: one
+
+two:
+  recipe: two
+  ingredient: two
+  measure_unit: two
