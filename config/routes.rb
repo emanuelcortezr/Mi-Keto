@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'admin/index'
+  get 'profile/index'
   resources :measure_units
   resources :ingredients
   resources :recipes
