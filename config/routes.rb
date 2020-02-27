@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
-  get 'admin/index'
-  get 'profile/index'
+  get '/users', to: 'users#edit', as: 'profile'
+
+  post "/users", to: "users#update"
+  patch "/users", to: "users#update"
+  get '/admin', to: 'admin#index'
+  
   resources :measure_units
   resources :ingredients
   resources :recipes
