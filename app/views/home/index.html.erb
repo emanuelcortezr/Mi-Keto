@@ -1,11 +1,486 @@
-<h1>Bienvenidos a Mi Keto</h1>
-<h2><%= current_user.first_name %>&nbsp;<%= current_user.last_name %></h2>
-<% if user_signed_in? %>
-<li>
-<%= link_to('Logout', destroy_user_session_path, method: :delete) %>
-</li>
-<% else %>
-<li>
-<%= link_to('Login', new_user_session_path) %>
-</li>
-<% end %>
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body col">
+          <%= link_to "Crea tu pauta semanal", dietary_path, :class=> "btn btn-primary btn-lg btn-block" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="row mb-5">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="header-title">Desayunos</h4>
+          <div class="data-tables datatable-dark">
+            <button id="btn-show-all-children-desayunos" type="button" class="btn btn-primary"><i class="fa fa-expand "></i>&nbsp;&nbsp;Mostrar Detalles</button>
+            <button id="btn-hide-all-children-desayunos" type="button" class="btn btn-light"><i class="fa fa-compress"></i>&nbsp;&nbsp;Colapsar</button>
+            <hr>
+            <table id="desayunos" class="display" cellspacing="0" width="100%">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Receta</th>
+                  <th>Descripción</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th></th>
+                  <th>Receta</th>
+                  <th>Descripción</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5 mb-5">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="header-title">Meriendas</h4>
+          <div class="data-tables datatable-dark">
+            <button id="btn-show-all-children-meriendas" type="button" class="btn btn-primary"><i class="fa fa-expand "></i>&nbsp;&nbsp;Mostrar Detalles</button>
+            <button id="btn-hide-all-children-meriendas" type="button" class="btn btn-light"><i class="fa fa-compress"></i>&nbsp;&nbsp;Colapsar</button>
+            <hr>
+            <table id="meriendas" class="display" cellspacing="0" width="100%">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Receta</th>
+                  <th>Descripción</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th></th>
+                  <th>Receta</th>
+                  <th>Descripción</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5 mb-5">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="header-title">Almuerzos</h4>
+          <div class="data-tables datatable-dark">
+            <button id="btn-show-all-children-almuerzos" type="button" class="btn btn-primary"><i class="fa fa-expand "></i>&nbsp;&nbsp;Mostrar Detalles</button>
+            <button id="btn-hide-all-children-almuerzos" type="button" class="btn btn-light"><i class="fa fa-compress"></i>&nbsp;&nbsp;Colapsar</button>
+            <hr>
+            <table id="almuerzos" class="display" cellspacing="0" width="100%">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Receta</th>
+                  <th>Descripción</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th></th>
+                  <th>Receta</th>
+                  <th>Descripción</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5 mb-5">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="header-title">Cenas</h4>
+          <div class="data-tables datatable-dark">
+            <button id="btn-show-all-children-cenas" type="button" class="btn btn-primary"><i class="fa fa-expand "></i>&nbsp;&nbsp;Mostrar Detalles</button>
+            <button id="btn-hide-all-children-cenas" type="button" class="btn btn-light"><i class="fa fa-compress"></i>&nbsp;&nbsp;Colapsar</button>
+            <hr>
+            <table id="cenas" class="display" cellspacing="0" width="100%">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Receta</th>
+                  <th>Descripción</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th></th>
+                  <th>Receta</th>
+                  <th>Descripción</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  /* Formatting function for row details - modify as you need */
+  function format ( d ) {
+     return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+         '<tr>'+
+             '<td>Preparación:</td>'+
+             '<td>'+d.description+'</td>'+
+         '</tr>'+
+        //  '<tr>'+
+        //      '<td>Extension number:</td>'+
+        //      '<td>'+d.extn+'</td>'+
+        //  '</tr>'+
+        //  '<tr>'+
+        //      '<td>Extra info:</td>'+
+        //      '<td>And any further details here (images etc)...</td>'+
+        //  '</tr>'+
+     '</table>';
+  }
+  
+  $(document).ready(function() {
+    let data = <%= raw @recipes.to_json %>;
+  
+     var tableDesayunos = $('#desayunos').DataTable({
+       "scrollY":        "160px",
+       language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Entradas",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        }
+    },
+          data: data,
+         'columns': [
+             {
+                 'className':      'details-control',
+                 'orderable':      false,
+                 'data':           null,
+                 'defaultContent': ''
+             },
+             { 'data': 'name' },
+             { 'data': 'description' },
+         ],
+         'order': [[1, 'asc']]
+     } );
+  
+     var tableMeriendas = $('#meriendas').DataTable({
+       "scrollY":        "160px",
+       language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Entradas",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        }
+    },
+          data: data,
+         'columns': [
+             {
+                 'className':      'details-control',
+                 'orderable':      false,
+                 'data':           null,
+                 'defaultContent': ''
+             },
+             { 'data': 'name' },
+             { 'data': 'description' },
+         ],
+         'order': [[1, 'asc']]
+     } );
+  
+      var tableAlmuerzos = $('#almuerzos').DataTable({
+        "scrollY":        "160px",
+       language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Entradas",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        }
+    },
+          data: data,
+         'columns': [
+             {
+                 'className':      'details-control',
+                 'orderable':      false,
+                 'data':           null,
+                 'defaultContent': ''
+             },
+             { 'data': 'name' },
+             { 'data': 'description' },
+         ],
+         'order': [[1, 'asc']]
+     } );
+  
+     var tableCenas = $('#cenas').DataTable({
+       "scrollY":        "160px",
+       language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Entradas",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        }
+    },
+          data: data,
+         'columns': [
+             {
+                 'className':      'details-control',
+                 'orderable':      false,
+                 'data':           null,
+                 'defaultContent': ''
+             },
+             { 'data': 'name' },
+             { 'data': 'description' },
+         ],
+         'order': [[1, 'asc']]
+     } );
+  
+     // Add event listener for opening and closing details
+     $('#desayunos tbody').on('click', 'td.details-control', function(){
+         var tr = $(this).closest('tr');
+         var row = tableDesayunos.row( tr );
+  
+         if(row.child.isShown()){
+             // This row is already open - close it
+             row.child.hide();
+             tr.removeClass('shown');
+         } else {
+             // Open this row
+             row.child(format(row.data())).show();
+             tr.addClass('shown');
+         }
+     });
+  
+     // Add event listener for opening and closing details
+     $('#meriendas tbody').on('click', 'td.details-control', function(){
+         var tr = $(this).closest('tr');
+         var row = tableMeriendas.row( tr );
+  
+         if(row.child.isShown()){
+             // This row is already open - close it
+             row.child.hide();
+             tr.removeClass('shown');
+         } else {
+             // Open this row
+             row.child(format(row.data())).show();
+             tr.addClass('shown');
+         }
+     });
+  
+      // Add event listener for opening and closing details
+     $('#almuerzos tbody').on('click', 'td.details-control', function(){
+         var tr = $(this).closest('tr');
+         var row = tableAlmuerzos.row( tr );
+  
+         if(row.child.isShown()){
+             // This row is already open - close it
+             row.child.hide();
+             tr.removeClass('shown');
+         } else {
+             // Open this row
+             row.child(format(row.data())).show();
+             tr.addClass('shown');
+         }
+     });
+  
+     // Add event listener for opening and closing details
+     $('#cenas tbody').on('click', 'td.details-control', function(){
+         var tr = $(this).closest('tr');
+         var row = tableCenas.row( tr );
+  
+         if(row.child.isShown()){
+             // This row is already open - close it
+             row.child.hide();
+             tr.removeClass('shown');
+         } else {
+             // Open this row
+             row.child(format(row.data())).show();
+             tr.addClass('shown');
+         }
+     });
+  
+     // Handle click on "Expand All" button
+     $('#btn-show-all-children-desayunos').on('click', function(){
+         // Enumerate all rows
+         tableDesayunos.rows().every(function(){
+             // If row has details collapsed
+             if(!this.child.isShown()){
+                 // Open this row
+                 this.child(format(this.data())).show();
+                 $(this.node()).addClass('shown');
+             }
+         });
+     });
+  
+     // Handle click on "Expand All" button
+     $('#btn-show-all-children-meriendas').on('click', function(){
+         // Enumerate all rows
+         tableMeriendas.rows().every(function(){
+             // If row has details collapsed
+             if(!this.child.isShown()){
+                 // Open this row
+                 this.child(format(this.data())).show();
+                 $(this.node()).addClass('shown');
+             }
+         });
+     });
+  
+     // Handle click on "Expand All" button
+     $('#btn-show-all-children-almuerzos').on('click', function(){
+         // Enumerate all rows
+         tableAlmuerzos.rows().every(function(){
+             // If row has details collapsed
+             if(!this.child.isShown()){
+                 // Open this row
+                 this.child(format(this.data())).show();
+                 $(this.node()).addClass('shown');
+             }
+         });
+     });
+  
+     // Handle click on "Expand All" button
+     $('#btn-show-all-children-cenas').on('click', function(){
+         // Enumerate all rows
+         tableCenas.rows().every(function(){
+             // If row has details collapsed
+             if(!this.child.isShown()){
+                 // Open this row
+                 this.child(format(this.data())).show();
+                 $(this.node()).addClass('shown');
+             }
+         });
+     });
+  
+     // Handle click on "Collapse All" button
+     $('#btn-hide-all-children-desayunos').on('click', function(){
+         // Enumerate all rows
+         tableDesayunos.rows().every(function(){
+             // If row has details expanded
+             if(this.child.isShown()){
+                 // Collapse row details
+                 this.child.hide();
+                 $(this.node()).removeClass('shown');
+             }
+         });
+     });
+  
+     $('#btn-hide-all-children-meriendas').on('click', function(){
+         // Enumerate all rows
+         tableMeriendas.rows().every(function(){
+             // If row has details expanded
+             if(this.child.isShown()){
+                 // Collapse row details
+                 this.child.hide();
+                 $(this.node()).removeClass('shown');
+             }
+         });
+     });
+  
+     $('#btn-hide-all-children-almuerzos').on('click', function(){
+         // Enumerate all rows
+         tableAlmuerzos.rows().every(function(){
+             // If row has details expanded
+             if(this.child.isShown()){
+                 // Collapse row details
+                 this.child.hide();
+                 $(this.node()).removeClass('shown');
+             }
+         });
+     });
+  
+     $('#btn-hide-all-children-cenas').on('click', function(){
+         // Enumerate all rows
+         tableCenas.rows().every(function(){
+             // If row has details expanded
+             if(this.child.isShown()){
+                 // Collapse row details
+                 this.child.hide();
+                 $(this.node()).removeClass('shown');
+             }
+         });
+     });
+  });
+</script>
+<style>
+  td.details-control {
+      background: url('https://cdn.rawgit.com/DataTables/DataTables/6c7ada53ebc228ea9bc28b1b216e793b1825d188/examples/resources/details_open.png') no-repeat center center;
+      cursor: pointer;
+  }
+  tr.shown td.details-control {
+      background: url('https://cdn.rawgit.com/DataTables/DataTables/6c7ada53ebc228ea9bc28b1b216e793b1825d188/examples/resources/details_close.png') no-repeat center center;
+  }
+  #example_filter input {
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+</style>

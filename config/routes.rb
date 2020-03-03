@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
-  get '/users', to: 'users#edit', as: 'profile'
-
-  post "/users", to: "users#update"
-  patch "/users", to: "users#update"
+  get 'informations', to:'informations#index'
+  get 'informations/index'
+  get 'dietary', to: 'dietary#index'
+  get 'profile', to: 'profile#edit' 
+  post "profile", to: "profile#update"
+  patch "profile", to: "profile#update"
+  resources :categories
+  get 'home', to: 'home#index'
   get '/admin', to: 'admin#index'
-  
   resources :measure_units
   resources :ingredients
   resources :recipes
