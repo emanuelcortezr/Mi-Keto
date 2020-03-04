@@ -52,9 +52,11 @@
           <li class="nav-item active">
             <%= link_to "Inicio", home_path, :class=> "nav-link" %>
           </li>
+          <% if current_user.superadmin_role? || current_user.supervisor_role? %>
           <li class="nav-item">
-            <%= link_to "Administración", admin_path, :class=> "nav-link" %>
+            <%= link_to "Administración", managers_path, :class=> "nav-link" %>
           </li>
+          <% end %>
           <li class="nav-item">
             <%= link_to "Perfil", profile_path, :class=> "nav-link" %>
           </li>

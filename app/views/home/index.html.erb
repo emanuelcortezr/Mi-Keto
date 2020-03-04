@@ -1,3 +1,13 @@
+<% if user_signed_in? %>
+  <li>
+    <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+  </li>
+<% else %>
+  <li>
+    <%= link_to('Login', new_user_session_path) %>
+  </li>
+<% end %>
+<p id="notice"><%= notice %></p>
 <div class="container-fluid mt-5">
   <div class="row">
     <div class="col">
@@ -136,7 +146,7 @@
      return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
          '<tr>'+
              '<td>Preparación:</td>'+
-             '<td>'+d.description+'</td>'+
+             '<td>'+d.recipe_description+'</td>'+
          '</tr>'+
         //  '<tr>'+
         //      '<td>Extension number:</td>'+
@@ -150,8 +160,12 @@
   }
   
   $(document).ready(function() {
-    let data = <%= raw @recipes.to_json %>;
-  
+    let dataDesayuno = <%= raw @recipesjoin.to_json %>.filter(category => category.category_name === "desayuno");
+    let dataMerienda = <%= raw @recipesjoin.to_json %>.filter(category => category.category_name === "merienda");
+    let dataAlmuerzo = <%= raw @recipesjoin.to_json %>.filter(category => category.category_name === "almuerzo");
+    let dataCena = <%= raw @recipesjoin.to_json %>.filter(category => category.category_name === "cena");
+
+    console.log(dataCena);
      var tableDesayunos = $('#desayunos').DataTable({
        "scrollY":        "160px",
        language: {
@@ -174,7 +188,7 @@
             "previous": "Anterior"
         }
     },
-          data: data,
+          data: dataDesayuno,
          'columns': [
              {
                  'className':      'details-control',
@@ -182,8 +196,8 @@
                  'data':           null,
                  'defaultContent': ''
              },
-             { 'data': 'name' },
-             { 'data': 'description' },
+             { 'data': 'recipe_name' },
+             { 'data': 'recipe_description' },
          ],
          'order': [[1, 'asc']]
      } );
@@ -210,7 +224,7 @@
             "previous": "Anterior"
         }
     },
-          data: data,
+          data: dataMerienda,
          'columns': [
              {
                  'className':      'details-control',
@@ -218,8 +232,8 @@
                  'data':           null,
                  'defaultContent': ''
              },
-             { 'data': 'name' },
-             { 'data': 'description' },
+             { 'data': 'recipe_name' },
+             { 'data': 'recipe_description' },
          ],
          'order': [[1, 'asc']]
      } );
@@ -246,7 +260,7 @@
             "previous": "Anterior"
         }
     },
-          data: data,
+          data: dataAlmuerzo,
          'columns': [
              {
                  'className':      'details-control',
@@ -254,8 +268,8 @@
                  'data':           null,
                  'defaultContent': ''
              },
-             { 'data': 'name' },
-             { 'data': 'description' },
+             { 'data': 'recipe_name' },
+             { 'data': 'recipe_description' },
          ],
          'order': [[1, 'asc']]
      } );
@@ -282,7 +296,7 @@
             "previous": "Anterior"
         }
     },
-          data: data,
+          data: dataCena,
          'columns': [
              {
                  'className':      'details-control',
@@ -290,8 +304,8 @@
                  'data':           null,
                  'defaultContent': ''
              },
-             { 'data': 'name' },
-             { 'data': 'description' },
+             { 'data': 'recipe_name' },
+             { 'data': 'recipe_description' },
          ],
          'order': [[1, 'asc']]
      } );

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'managers', to: 'manager#index'
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   get 'informations', to:'informations#index'
   get 'informations/index'
   get 'dietary', to: 'dietary#index'
