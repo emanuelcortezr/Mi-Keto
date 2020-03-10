@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  has_many :user_ingredients
+  has_many :ingredients, through: :user_ingredients
   after_create :send_admin_mail
   def send_admin_mail
     UserMailer.send_welcome_email(self).deliver_later
