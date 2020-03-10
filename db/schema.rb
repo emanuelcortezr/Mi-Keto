@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_10_225957) do
+ActiveRecord::Schema.define(version: 2020_03_10_231949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2020_03_10_225957) do
   end
 
   create_table "measure_units", force: :cascade do |t|
-    t.text "description"
+    t.text "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2020_03_10_225957) do
     t.bigint "measure_unit_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "quantity"
     t.index ["ingredient_id"], name: "index_recipe_ingredients_on_ingredient_id"
     t.index ["measure_unit_id"], name: "index_recipe_ingredients_on_measure_unit_id"
     t.index ["recipe_id"], name: "index_recipe_ingredients_on_recipe_id"
@@ -90,6 +91,7 @@ ActiveRecord::Schema.define(version: 2020_03_10_225957) do
     t.boolean "superadmin_role", default: false
     t.boolean "supervisor_role", default: false
     t.boolean "user_role", default: true
+    t.jsonb "guidelines", default: [], array: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
