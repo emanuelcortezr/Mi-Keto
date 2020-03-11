@@ -60,3 +60,10 @@ gem 'bootstrap-form'
 gem 'jquery-rails'
 
 gem 'devise'
+
+gem 'rails_admin', '~> 2.0'
+
+gem 'cancancan'
+
+gem 'annotate'
+gem 'pluck_to_hash'

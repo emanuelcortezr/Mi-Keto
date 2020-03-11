@@ -1,129 +1,150 @@
-<div class="container-fluid mt-5">
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <div class="card-body col">
-          <%= link_to "Crea tu pauta semanal", dietary_path, :class=> "btn btn-primary btn-lg btn-block" %>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br/>
-  <div class="row mb-5">
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="header-title">Desayunos</h4>
-          <div class="data-tables datatable-dark">
-            <button id="btn-show-all-children-desayunos" type="button" class="btn btn-primary"><i class="fa fa-expand "></i>&nbsp;&nbsp;Mostrar Detalles</button>
-            <button id="btn-hide-all-children-desayunos" type="button" class="btn btn-light"><i class="fa fa-compress"></i>&nbsp;&nbsp;Colapsar</button>
-            <hr>
-            <table id="desayunos" class="display" cellspacing="0" width="100%">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Receta</th>
-                  <th>Descripción</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th></th>
-                  <th>Receta</th>
-                  <th>Descripción</th>
-                </tr>
-              </tfoot>
-            </table>
+<div class="card">
+  <div class="card-body">
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="pills-all-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-home" aria-selected="true">Todos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="pills-desayunos-tab" data-toggle="pill" href="#pills-desayunos" role="tab" aria-controls="pills-profile" aria-selected="false">Desayunos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="pills-meriendas-tab" data-toggle="pill" href="#pills-meriendas" role="tab" aria-controls="pills-contact" aria-selected="false">Meriendas</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="pills-almuerzos-tab" data-toggle="pill" href="#pills-almuerzos" role="tab" aria-controls="pills-contact" aria-selected="false">Almuerzos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="pills-cenas-tab" data-toggle="pill" href="#pills-cenas" role="tab" aria-controls="pills-contact" aria-selected="false">Cenas</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+      <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab">
+        <div class="container-fluid">
+          <div class="row d-flex justify-content-around">
+          <% @recipes.each do |recipe| %>
+            <div class="col-3">
+              <div class="card mb-5">
+                <img src=<%= recipe.recipe_photo %> class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"><%= recipe.recipe_name %></h5>
+                  <p class="card-text"><%= recipe.recipe_description %></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Cras justo odio</li>
+                  <li class="list-group-item">Dapibus ac facilisis in</li>
+                  <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+                <div class="card-body">
+                  <a href="#" class="card-link">Card link</a>
+                  <a href="#" class="card-link">Another link</a>
+                </div>
+              </div>
+            </div>
+            <% end %>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row mt-5 mb-5">
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="header-title">Meriendas</h4>
-          <div class="data-tables datatable-dark">
-            <button id="btn-show-all-children-meriendas" type="button" class="btn btn-primary"><i class="fa fa-expand "></i>&nbsp;&nbsp;Mostrar Detalles</button>
-            <button id="btn-hide-all-children-meriendas" type="button" class="btn btn-light"><i class="fa fa-compress"></i>&nbsp;&nbsp;Colapsar</button>
-            <hr>
-            <table id="meriendas" class="display" cellspacing="0" width="100%">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Receta</th>
-                  <th>Descripción</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th></th>
-                  <th>Receta</th>
-                  <th>Descripción</th>
-                </tr>
-              </tfoot>
-            </table>
+      <div class="tab-pane fade" id="pills-desayunos" role="tabpanel" aria-labelledby="pills-desayunos-tab">
+      <div class="container-fluid">
+          <div class="row d-flex justify-content-around">
+          <% @desayunos.each do |desayuno| %>
+            <div class="col-3">
+              <div class="card mb-5">
+                <img src=<%= desayuno.recipe_photo %> class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"><%= desayuno.recipe_name %></h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Cras justo odio</li>
+                  <li class="list-group-item">Dapibus ac facilisis in</li>
+                  <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+                <div class="card-body">
+                  <a href="#" class="card-link">Card link</a>
+                  <a href="#" class="card-link">Another link</a>
+                </div>
+              </div>
+            </div>
+            <% end %>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row mt-5 mb-5">
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="header-title">Almuerzos</h4>
-          <div class="data-tables datatable-dark">
-            <button id="btn-show-all-children-almuerzos" type="button" class="btn btn-primary"><i class="fa fa-expand "></i>&nbsp;&nbsp;Mostrar Detalles</button>
-            <button id="btn-hide-all-children-almuerzos" type="button" class="btn btn-light"><i class="fa fa-compress"></i>&nbsp;&nbsp;Colapsar</button>
-            <hr>
-            <table id="almuerzos" class="display" cellspacing="0" width="100%">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Receta</th>
-                  <th>Descripción</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th></th>
-                  <th>Receta</th>
-                  <th>Descripción</th>
-                </tr>
-              </tfoot>
-            </table>
+      <div class="tab-pane fade" id="pills-meriendas" role="tabpanel" aria-labelledby="pills-meriendas-tab">
+      <div class="container-fluid">
+          <div class="row d-flex justify-content-around">
+          <% @meriendas.each do |merienda| %>
+            <div class="col-3">
+              <div class="card mb-5">
+                <img src=<%= merienda.recipe_photo %> class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"><%= merienda.recipe_name %></h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Cras justo odio</li>
+                  <li class="list-group-item">Dapibus ac facilisis in</li>
+                  <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+                <div class="card-body">
+                  <a href="#" class="card-link">Card link</a>
+                  <a href="#" class="card-link">Another link</a>
+                </div>
+              </div>
+            </div>
+            <% end %>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row mt-5 mb-5">
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="header-title">Cenas</h4>
-          <div class="data-tables datatable-dark">
-            <button id="btn-show-all-children-cenas" type="button" class="btn btn-primary"><i class="fa fa-expand "></i>&nbsp;&nbsp;Mostrar Detalles</button>
-            <button id="btn-hide-all-children-cenas" type="button" class="btn btn-light"><i class="fa fa-compress"></i>&nbsp;&nbsp;Colapsar</button>
-            <hr>
-            <table id="cenas" class="display" cellspacing="0" width="100%">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Receta</th>
-                  <th>Descripción</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th></th>
-                  <th>Receta</th>
-                  <th>Descripción</th>
-                </tr>
-              </tfoot>
-            </table>
+      <div class="tab-pane fade" id="pills-almuerzos" role="tabpanel" aria-labelledby="pills-almuerzos-tab">
+      <div class="container-fluid">
+          <div class="row d-flex justify-content-around">
+          <% @almuerzos.each do |almuerzo| %>
+            <div class="col-3">
+              <div class="card mb-5">
+                <img src=<%= almuerzo.recipe_photo %> class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"><%= almuerzo.recipe_name %></h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Cras justo odio</li>
+                  <li class="list-group-item">Dapibus ac facilisis in</li>
+                  <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+                <div class="card-body">
+                  <a href="#" class="card-link">Card link</a>
+                  <a href="#" class="card-link">Another link</a>
+                </div>
+              </div>
+            </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="pills-cenas" role="tabpanel" aria-labelledby="pills-cenas-tab">
+      <div class="container-fluid">
+          <div class="row d-flex justify-content-around">
+          <% @cenas.each do |cena| %>
+            <div class="col-3">
+              <div class="card mb-5">
+                <img src=<%= cena.recipe_photo %> class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"><%= cena.recipe_name %></h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Cras justo odio</li>
+                  <li class="list-group-item">Dapibus ac facilisis in</li>
+                  <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+                <div class="card-body">
+                  <a href="#" class="card-link">Card link</a>
+                  <a href="#" class="card-link">Another link</a>
+                </div>
+              </div>
+            </div>
+            <% end %>
           </div>
         </div>
       </div>
@@ -136,7 +157,8 @@
      return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
          '<tr>'+
              '<td>Preparación:</td>'+
-             '<td>'+d.description+'</td>'+
+             '<td>'+d.recipe_description+'</td>'+
+             '<td><img src='+d.recipe_photo+'/></td>'+
          '</tr>'+
         //  '<tr>'+
         //      '<td>Extension number:</td>'+
@@ -150,7 +172,11 @@
   }
   
   $(document).ready(function() {
-    let data = <%= raw @recipes.to_json %>;
+    let dataDesayuno = <%= raw @recipesjoin.to_json %>.filter(category => category.category_name === "desayuno");
+    let dataMerienda = <%= raw @recipesjoin.to_json %>.filter(category => category.category_name === "merienda");
+    let dataAlmuerzo = <%= raw @recipesjoin.to_json %>.filter(category => category.category_name === "almuerzo");
+    let dataCena = <%= raw @recipesjoin.to_json %>.filter(category => category.category_name === "cena");
+    console.log(dataCena);
   
      var tableDesayunos = $('#desayunos').DataTable({
        "scrollY":        "160px",
@@ -174,7 +200,7 @@
             "previous": "Anterior"
         }
     },
-          data: data,
+          data: dataDesayuno,
          'columns': [
              {
                  'className':      'details-control',
@@ -182,8 +208,8 @@
                  'data':           null,
                  'defaultContent': ''
              },
-             { 'data': 'name' },
-             { 'data': 'description' },
+             { 'data': 'recipe_name' },
+             { 'data': 'recipe_description' },
          ],
          'order': [[1, 'asc']]
      } );
@@ -210,7 +236,7 @@
             "previous": "Anterior"
         }
     },
-          data: data,
+          data: dataMerienda,
          'columns': [
              {
                  'className':      'details-control',
@@ -218,8 +244,8 @@
                  'data':           null,
                  'defaultContent': ''
              },
-             { 'data': 'name' },
-             { 'data': 'description' },
+             { 'data': 'recipe_name' },
+             { 'data': 'recipe_description' },
          ],
          'order': [[1, 'asc']]
      } );
@@ -246,7 +272,7 @@
             "previous": "Anterior"
         }
     },
-          data: data,
+          data: dataAlmuerzo,
          'columns': [
              {
                  'className':      'details-control',
@@ -254,8 +280,8 @@
                  'data':           null,
                  'defaultContent': ''
              },
-             { 'data': 'name' },
-             { 'data': 'description' },
+             { 'data': 'recipe_name' },
+             { 'data': 'recipe_description' },
          ],
          'order': [[1, 'asc']]
      } );
@@ -282,7 +308,7 @@
             "previous": "Anterior"
         }
     },
-          data: data,
+          data: dataCena,
          'columns': [
              {
                  'className':      'details-control',
@@ -290,8 +316,8 @@
                  'data':           null,
                  'defaultContent': ''
              },
-             { 'data': 'name' },
-             { 'data': 'description' },
+             { 'data': 'recipe_name' },
+             { 'data': 'recipe_description' },
          ],
          'order': [[1, 'asc']]
      } );
@@ -482,5 +508,9 @@
     border: 1px solid #ced4da;
     border-radius: .25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+  
+  .fade {
+    height: 42em !important;%
   }
 </style>

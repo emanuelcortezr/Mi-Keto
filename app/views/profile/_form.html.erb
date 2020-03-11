@@ -16,6 +16,12 @@
               </div>
             <% end %>
             <div class="row">
+              <div class="col-2 offset-8">
+                <%= image_tag @user.photo, :class=> "avatar mb-2"%>
+                <button type="button" class="btn btn-primary" id="randomAvatar">Busca avatar</button>
+              </div>
+            </div>
+            <div class="row">
               <div class="col">
                 <div class="field">
                   <%= form.label :email, 'Correo Electrónico' %>
@@ -45,6 +51,33 @@
               </div>
             </div>
             <br/>
+            <div class="row">
+              <div class="col-12">
+                <div class="field">
+                  <%= form.label 'Ingredientes a los que es alergico' %>
+                  <%= select_tag  "ingredient_ids[]", options_from_collection_for_select(Ingredient.all, "id", "name", @user.ingredient_ids), :id => "user_ingredient_ids", 
+                    multiple: true, size: '8%', class: "form-control input-sm selectpicker", data: { 'live-search' => 'true' } %>
+                </div>
+              </div>
+            </div>
+            <br/>
+            <div class="row">
+              <div class="col-6">
+                <div class="field">
+                  <%= form.label 'Ayunos Intermitentes' %>
+                  <%= select_tag  "int_fasting", options_for_select({"12 Horas"=> 1, "16 Horas"=> 2}, @user.int_fasting), 
+                    size: '8%', class: "form-control input-sm selectpicker" %>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="field">
+                  <%= form.label 'Días' %>
+                  <%= select_tag  "days[]", options_for_select(["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado", "Domingo"], @user.days),
+                    multiple: true, size: '8%', class: "form-control input-sm selectpicker", data: { 'live-search' => 'true' }, :include_blank => true %>
+                </div>
+              </div>
+            </div>
+            <br/>
             <div class="actions">
               <%= form.submit "Guardar cambios", :class=>"btn btn-primary" %>
             </div>
@@ -54,3 +87,36 @@
     </div>
   </div>
 </div>
+<script>
+  $(()=>{
+    $('select').selectpicker();
+    $('*:not(.bootstrap-select) > .selectpicker').selectpicker('refresh');
+    $('#randomAvatar').click(randomAvatar);
+  
+    function randomAvatar() {
+      let random = Math.floor(Math.random() * (49) ) + 1;
+      let imageRandom = "/images/avatars/" + random + ".png"
+      // console.log(imageRandom);
+      $.ajax({
+        type: "PATCH",
+        url: '/profile_photo',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        contentType: 'application/json',
+        dataType: 'json',
+        data : JSON.stringify({ "photo" : imageRandom }),
+        cache: true, // otherwise will get fresh copy every page load
+        success: function() {
+          location.reload();
+        }
+      })
+  
+    }  
+  });
+</script>
+<style>
+  .avatar {
+    width: 200px;
+    height: 210px
+  }
+</style>
+<%#  %>
