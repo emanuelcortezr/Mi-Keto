@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2020_03_11_002441) do
     t.bigint "category_id", null: false
     t.text "instructions"
     t.string "photo"
+    t.text "nutrition_facts"
     t.index ["category_id"], name: "index_recipes_on_category_id"
   end
 
