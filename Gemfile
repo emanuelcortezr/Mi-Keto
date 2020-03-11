@@ -61,9 +61,11 @@ gem 'jquery-rails'
 
 gem 'devise'
 
-gem 'rails_admin', '~> 2.0'
-
-gem 'cancancan'
+gem 'gon'
 
 gem 'annotate'
 gem 'pluck_to_hash'
+
+gem 'rails_admin', '~> 2.0'
+
+gem 'cancancan'

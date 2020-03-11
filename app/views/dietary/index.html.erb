@@ -2,51 +2,77 @@
   <div class="col">
     <div class="card">
       <div class="card-body">
-        <h4 class="header-title">Pautas Alimencias</h4>
+        <h4 class="header-title">Pautas Alimenticias</h4>
         <div class="data-tables datatable-dark">
-          <button id="btn-show-all-children" type="button" class="btn btn-primary"><i class="fa fa-expand "></i>&nbsp;&nbsp;Mostrar Detalles</button>
-          <button id="btn-hide-all-children" type="button" class="btn btn-light"><i class="fa fa-compress"></i>&nbsp;&nbsp;Colapsar</button>
-          <hr>
-          <table id="dietary" class="display" cellspacing="0" width="100%">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Tiempo</th>
-                <th>Lunes</th>
-                <%# <th>Martes</th>
-                <th>Miercoles</th>
-                <th>Jueves</th>
-                <th>Viernes</th>
-                <th>Sabado</th>
-                <th>Domingo</th> %>
-              </tr>
-            </thead>
-            <tfoot>
-              <tr>
-                <th></th>
-                <th>Tiempo</th>
-                <th>Lunes</th>
-                <%# <th>Martes</th>
-                <th>Miercoles</th>
-                <th>Jueves</th>
-                <th>Viernes</th>
-                <th>Sabado</th>
-                <th>Domingo</th> %>
-              </tr>
-            </tfoot>
-          </table>
+          <div class="d-flex justify-content-between">
+            <div><button id="btn-show-all-children" type="button" class="btn btn-primary"><i class="fa fa-expand "></i>&nbsp;&nbsp;Mostrar Detalles</button>
+              <button id="btn-hide-all-children" type="button" class="btn btn-light"><i class="fa fa-compress"></i>&nbsp;&nbsp;Colapsar</button></div>
+            <button id="btn-update-guideline" type="button" class="btn btn-primary" ><i class="fa fa-save "></i>&nbsp;&nbsp;Guardar pauta</button></div>
         </div>
+        <hr>
+        <div class="">
+          <button id="btn-refresh-guideline" type="button" class="btn btn-primary btn-lg btn-block"><i class="fa fa-cogs"></i>Generar nueva pauta semanal</button></div>
+      </div>
+      <hr>
+      <table id="dietary" class="display" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Tiempo</th>
+            <th>Lunes</th>
+            <th>Martes</th>
+            <th>Miercoles</th>
+            <th>Jueves</th>
+            <th>Viernes</th>
+            <th>Sabado</th>
+            <th>Domingo</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th></th>
+            <th>Tiempo</th>
+            <th>Lunes</th>
+            <th>Martes</th>
+            <th>Miercoles</th>
+            <th>Jueves</th>
+            <th>Viernes</th>
+            <th>Sabado</th>
+            <th>Domingo</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div class="row mb-5">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <ul class="list-group">
+          <% @totales_ingredients.each do |ingredient| %>
+            <li class="list-group-item"><%= ingredient.name %></li>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>
 </div>
 <script>
   /* Formatting function for row details - modify as you need */
+  
+  // console.log(<%= raw @arrayRecipes.to_json %>);
+  // console.log(<%= raw @arrayIDsRecipes.to_json %>);
+  
+  let arrayIdsRecipes = <%= raw @arrayIDsRecipes.to_json %>;
+  
     function format ( d ) {
        return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
            '<tr>'+
-               '<td>Preparación:</td>'+
-               '<td>'+d.description+'</td>'+
+               '<td>Lunes:</td>'+
+               '<td>'+d.lunes+'</td>'+
            '</tr>'+
           //  '<tr>'+
           //      '<td>Extension number:</td>'+
@@ -58,11 +84,46 @@
           //  '</tr>'+
        '</table>';
     }
-
-   
+  
+  
+    function UpdateGuideline(){
+      const obj = {"lunes": [], "martes": [], "miercoles": [], "jueves": [], "viernes": [], "sabado": [], "domingo": []};
+      arrayIdsRecipes.forEach(element => {
+        obj.lunes.push(parseInt(element.lunes));
+        obj.martes.push(parseInt(element.martes));
+        obj.miercoles.push(parseInt(element.miercoles));
+        obj.jueves.push(parseInt(element.jueves));
+        obj.viernes.push(parseInt(element.viernes));
+        obj.sabado.push(parseInt(element.sabado));
+        obj.domingo.push(parseInt(element.domingo));
+      });
+  
+      $.ajax({
+        type: "POST",
+        url: '/dietary',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        contentType: 'application/json',
+        dataType: 'json',
+        data : JSON.stringify({ "guidelines" : [obj]}),
+        cache: true, // otherwise will get fresh copy every page load
+        success: function(data) {
+          refresh()
+        }
+      })
+  
+  
+    }
+  
+    function refresh() {
+        location.reload();
+    }
   
   $(document).ready(function() {
-    let data = <%= raw @recipes.to_json %>;
+    $('#btn-update-guideline').click(UpdateGuideline)
+    $('#btn-refresh-guideline').click(refresh)
+    var data = <%= raw @arrayRecipes.to_json %>;
+  
+  
   
      var table = $('#dietary').DataTable({
   			"dom": '<"dt-buttons"Bf><"clear">lirtp',
@@ -78,7 +139,7 @@
           { extend: 'colvis', text: 'Ocultar columnas' },
           { extend: 'colvisRestore', text: 'Restaurar columnas' },
         ],
-       "scrollY":        "160px",
+       "scrollY":        "500px",
        language: {
         "decimal": "",
         "emptyTable": "No hay información",
@@ -107,12 +168,18 @@
                  'data':           null,
                  'defaultContent': ''
              },
-             { 'data': 'name' },
-             { 'data': 'description' },
+             { 'data': 'tiempo' },
+             { 'data': 'lunes' },
+             { 'data': 'martes' },
+             { 'data': 'miercoles' },
+             { 'data': 'jueves' },
+             { 'data': 'viernes' },
+             { 'data': 'sabado' },
+             { 'data': 'domingo' },
          ],
          'order': [[1, 'asc']]
      } );
-
+  
      // Add event listener for opening and closing details
      $('#dietary tbody').on('click', 'td.details-control', function(){
          var tr = $(this).closest('tr');
@@ -128,7 +195,7 @@
              tr.addClass('shown');
          }
      });
-
+  
      // Handle click on "Expand All" button
      $('#btn-show-all-children').on('click', function(){
          // Enumerate all rows
@@ -169,5 +236,5 @@
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
+  }
 </style>
