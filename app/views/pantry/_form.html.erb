@@ -1,0 +1,78 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h2>¿Qué cocinar?</h2>
+          <br/>
+          <form>
+            <div class="row">
+              <div class="col-12">
+                <div class="field">
+                  <label for="exampleFormControlInput1">Ingredientes que tienes en la despensa</label>
+                  <%= select_tag  "ingredient_ids[]", options_from_collection_for_select(Ingredient.all, "id", "name"), :id => "ingredient", 
+                    multiple: true, size: '8%', class: "form-control input-sm selectpicker", data: { 'live-search' => 'true' } %>
+                </div>
+              </div>
+            </div>
+            <br/>
+            <div class="row">
+              <div class="col-12">
+                <div class="field">
+                  <label for="exampleFormControlInput1">Categoría</label>
+                  <%= select_tag "category_id", options_from_collection_for_select(Category.all, "id", "name"), 
+                    size: '8%', class: "form-control input-sm selectpicker", data: { 'live-search' => 'true' }, 
+                    title:"Ninguno seleccionado", :id=>"category" %>
+                </div>
+              </div>
+            </div>
+            <br/>
+            <div class="actions">
+              <button type="button" class="btn btn-primary search_recipes">Buscar Recetas</button>
+            </div>
+            <br/>
+            <br/>
+            <div class="card">
+              <div class="card-body" id="cardContent">
+                
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%# <script>
+  $(()=>{
+    $('select').selectpicker();
+    $('*:not(.bootstrap-select) > .selectpicker').selectpicker('refresh');
+    $('#randomAvatar').click(randomAvatar);
+  
+    function randomAvatar() {
+      let random = Math.floor(Math.random() * (49) ) + 1;
+      let imageRandom = "/images/avatars/" + random + ".png"
+      // console.log(imageRandom);
+      $.ajax({
+        type: "PATCH",
+        url: '/profile_photo',
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        contentType: 'application/json',
+        dataType: 'json',
+        data : JSON.stringify({ "photo" : imageRandom }),
+        cache: true, // otherwise will get fresh copy every page load
+        success: function() {
+          location.reload();
+        }
+      })
+  
+    }  
+  });
+</script>
+<style>
+  .avatar {
+    width: 200px;
+    height: 210px
+  }
+</style>
+ %>

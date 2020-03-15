@@ -1,0 +1,50 @@
+<%= render 'form' %>
+<script>
+  $(document).ready(function() {
+      $('.search_recipes').bind('click', function() {
+          let ingredients = $('#ingredient').val().map(e => parseInt(e));
+          let category = parseInt($('#category').val());
+          let data = {"ingredients": ingredients, "category": category};
+          console.log(data.category)
+          if (ingredients.length && category) {
+            $.ajax({
+                type: "POST",
+                url: '/pantry_search',
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                contentType: 'application/json',
+                dataType: 'json',
+                data : JSON.stringify(data),
+                cache: true,
+                success: function(response) {
+                    console.log(response);
+  
+                    if (!response.recipes.length) {
+                        $('#cardContent').append("No se encontraron recetas con los ingredientes ingresados. ");
+                    } else {
+                        let recipes = response.recipes.map((value)=> {
+                        return `<div class="card">
+                        <div class="card-header">
+                            ${value.name}
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">${value.description}</li>
+                            <li class="list-group-item">${value.ingredients}</li>
+                            <li class="list-group-item">${value.instructions}</li>
+                            <li class="list-group-item">${value.nutrition_facts}</li>
+                        </ul>
+                        </div><br/>`
+                    })
+  
+                    recipes.forEach(element => {
+                        $('#cardContent').append(element);
+                    });
+                    }
+  
+  
+                }
+            })
+  
+          }
+      });
+  });
+</script>

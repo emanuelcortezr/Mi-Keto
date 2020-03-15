@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'pantry/index'
   get "pantry", to: "pantry#index"
   get "pantry_search", to: "pantry#pantry_search"
   post "pantry_search", to: "pantry#pantry_search"
