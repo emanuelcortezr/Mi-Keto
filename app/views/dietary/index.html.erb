@@ -1,2 +1,439 @@
-<h1>Dietary#index</h1>
-<p>Find me in app/views/dietary/index.html.erb</p>
+<div class="row mb-5">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="header-title">Pautas Alimenticias</h4>
+        <div class="data-tables datatable-dark">
+          <div class="d-flex justify-content-between">
+            <div><button id="btn-show-all-children" type="button" class="btn btn-primary"><i class="fa fa-expand "></i>&nbsp;&nbsp;Mostrar Detalles</button>
+              <button id="btn-hide-all-children" type="button" class="btn btn-light"><i class="fa fa-compress"></i>&nbsp;&nbsp;Colapsar</button></div>
+            <button id="btn-update-guideline" type="button" class="btn btn-primary" ><i class="fa fa-save "></i>&nbsp;&nbsp;Guardar pauta</button></div>
+        </div>
+        <hr>
+        <div class="">
+          <button id="btn-refresh-guideline" type="button" class="btn btn-primary btn-lg btn-block"><i class="fa fa-cogs"></i>Generar nueva pauta semanal</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="card text-center">
+        <div class="card-header">
+          <h4>Pauta Generada al azar&nbsp;&nbsp;<i class="fa fa-random"></i></h4>
+        </div>
+      </div>
+      <%# <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p> %>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <% @array.each do |recipe| %>
+          <div class="col altura">
+            <div class="card">
+              <div class="card-header text-center">
+                <h5><%= recipe["day"] %></h5>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Desayuno: <br/>
+                  <%= recipe["desayuno"] %></h5>
+                <p class="card-text"><%= recipe["description_d"]%></p>
+                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Merienda:  <br/>
+                  <%= recipe["merienda"] %></h5>
+                <p class="card-text"><%= recipe["description_m"]%></p>
+                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Almuerzo:  <br/>
+                  <%= recipe["almuerzo"] %></h5>
+                <p class="card-text"><%= recipe["description_a"]%></p>
+                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Cena: <br/>
+                  <%= recipe["cena"] %></h5>
+                <p class="card-text"><%= recipe["description_c"]%></p>
+                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
+              </div>
+              <div class="card-footer text-center">
+                <button  type="button" class="btn btn-primary btn-lg btn-block my-button" id="<%= recipe["day"] %>" name="[<%= recipe["id_d"] %>, <%= recipe["id_m"] %>, <%= recipe["id_a"] %>, <%=recipe["id_c"] %>]" data-toggle="modal" data-target="#exampleModalScrollable">Detalle</button>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<br/>
+<br/>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<% if @current_user.guidelines.length > 0 %>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="card text-center">
+          <div class="card-header">
+            <h4>Pauta Guardada&nbsp;&nbsp;<i class="fa fa-save"></i></i></h4>
+        </div>
+      </div>
+      <%# <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p> %>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <% @obj.each do |recipe| %>
+          <div class="col altura">
+            <div class="card">
+              <div class="card-header text-center">
+                <h5><%= recipe[:day] %></h5>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Desayuno: <br/>
+                  <%= recipe[:desayuno] %></h5>
+                <p class="card-text"><%= recipe[:description_d] %></p>
+                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Merienda:  <br/>
+                  <%= recipe[:merienda] %></h5>
+                <p class="card-text"><%= recipe[:description_m] %></p>
+                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Almuerzo:  <br/>
+                  <%= recipe[:almuerzo] %></h5>
+                <p class="card-text"><%= recipe[:description_a] %></p>
+                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Cena: <br/>
+                  <%= recipe[:cena] %></h5>
+                <p class="card-text"><%= recipe[:description_c] %></p>
+                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
+              </div>
+              <div class="card-footer text-center">
+                <button  type="button" class="btn btn-primary btn-lg btn-block my-button2" id="<%= recipe[:day] %>" name="[<%= recipe[:id_d] %>, <%= recipe[:id_m] %>, <%= recipe[:id_a] %>, <%=recipe[:id_c] %>]" data-toggle="modal" data-target="#exampleModalScrollable2">Detalle</button>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<%= link_to "Pauta alimenticia (PDF)", dietary_path(@obj, format: "pdf"), :class=>"btn btn-danger" %>
+
+<% end %>
+<!-- Modal 2-->
+<div class="modal fade" id="exampleModalScrollable2" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle2" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitles2">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<%= link_to "Lista de Ingredientes (PDF)", list_path(@totales_ingredients, format: "pdf"), :class=>"btn btn-danger" %>
+
+<script>
+  console.log(<%= raw @totales_ingredients.to_json %>);
+      function format ( d ) {
+         return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+             '<tr>'+
+                 '<td>Lunes:</td>'+
+                 '<td>'+d.lunes+'</td>'+
+             '</tr>'+
+         '</table>';
+      }
+  
+      function UpdateGuideline(){
+        let arrayIdsRecipes = <%= raw @arrayIDsRecipes.to_json %>;
+        const obj = {"lunes": [], "martes": [], "miercoles": [], "jueves": [], "viernes": [], "sabado": [], "domingo": []};
+        arrayIdsRecipes.forEach(element => {
+          obj.lunes.push(parseInt(element["Lunes"]));
+          obj.martes.push(parseInt(element["Martes"]));
+          obj.miercoles.push(parseInt(element["Miércoles"]));
+          obj.jueves.push(parseInt(element["Jueves"]));
+          obj.viernes.push(parseInt(element["Viernes"]));
+          obj.sabado.push(parseInt(element["Sabado"]));
+          obj.domingo.push(parseInt(element["Domingo"]));
+        });
+  
+        $.ajax({
+          type: "POST",
+          url: '/dietary',
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+          contentType: 'application/json',
+          dataType: 'json',
+          data : JSON.stringify({ "guidelines" : [obj]}),
+          cache: true,
+          success: function(data) {
+            refresh()
+          }
+        })
+      }
+  
+  
+  
+      function refresh() {
+          location.reload();
+      }
+  
+    $(document).ready(function() {
+  
+      $('.my-button').bind('click', function(event) {
+        event.preventDefault();
+        let valuesIds = JSON.parse(event.target.name);
+        $.ajax({
+          type: "POST",
+          url: '/template_modal',
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+          contentType: 'application/json',
+          dataType: 'json',
+          data : JSON.stringify({ "valuesIds" : valuesIds}),
+          cache: true,
+          success: function(response) {
+            let nameDay = document.querySelector(`#${event.target.id}`).parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.innerHTML;
+            // let nameDay = document.querySelector('.my-button').parentNode.parentNode.parentNode;
+            let htmlTemplateTitle = `<div class="demo-container">
+              <p>${nameDay}</em></p>
+          </div>`;
+            let htmlTemplate = `<div class="demo-container">
+              <p>Desayuno: ${response.recipes[0].name}</em></p>
+              <p>Descripción: ${response.recipes[0].description}</em></p>
+              <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
+              <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
+              <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
+              <p>Merienda: ${response.recipes[1].name}</em></p>
+              <p>Descripción: ${response.recipes[1].description}</em></p>
+              <p>Ingredientes: ${response.recipes[1].ingredients}</em></p>
+              <p>Instrucciones: ${response.recipes[1].instructions}</em></p>
+              <p>Informacion nutricional: ${response.recipes[1].nutrition_facts}</em></p>
+              <p>Almuerzo: ${response.recipes[2].name}</em></p>
+              <p>Descripción: ${response.recipes[2].description}</em></p>
+                          <p>Ingredientes: ${response.recipes[2].ingredients}</em></p>
+              <p>Instrucciones: ${response.recipes[2].instructions}</em></p>
+              <p>Informacion nutricional: ${response.recipes[2].nutrition_facts}</em></p>
+  
+              <p>Cena: ${response.recipes[3].name}</em></p>
+              <p>Descripción: ${response.recipes[3].description}</em></p>
+              <p>Ingredientes: ${response.recipes[3].ingredients}</em></p>
+              <p>Instrucciones: ${response.recipes[3].instructions}</em></p>
+              <p>Informacion nutricional: ${response.recipes[3].nutrition_facts}</em></p>
+  
+          </div>`;
+            $('#exampleModalScrollable').find('.modal-title').html(htmlTemplateTitle)
+            $('#exampleModalScrollable').find('.modal-body').html(htmlTemplate)
+          }
+        })
+      });
+
+      $('.my-button2').bind('click', function(event) {
+        event.preventDefault();
+        let valuesIds = JSON.parse(event.target.name);
+        $.ajax({
+          type: "POST",
+          url: '/template_modal2',
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+          contentType: 'application/json',
+          dataType: 'json',
+          data : JSON.stringify({ "valuesIds" : valuesIds}),
+          cache: true,
+          success: function(response) {
+            let nameDay = document.querySelector(`#${event.target.id}`).parentNode.parentNode.parentNode.firstElementChild.firstElementChild.firstElementChild.innerHTML;
+            // let nameDay = document.querySelector('.my-button').parentNode.parentNode.parentNode;
+            console.log(nameDay);
+            let htmlTemplateTitle = `<div class="demo-container">
+              <p>${nameDay}</em></p>
+          </div>`;
+            let htmlTemplate = `<div class="demo-container">
+              <p>Desayuno: ${response.recipes[0].name}</em></p>
+              <p>Descripción: ${response.recipes[0].description}</em></p>
+              <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
+              <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
+              <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
+              <p>Merienda: ${response.recipes[1].name}</em></p>
+              <p>Descripción: ${response.recipes[1].description}</em></p>
+              <p>Ingredientes: ${response.recipes[1].ingredients}</em></p>
+              <p>Instrucciones: ${response.recipes[1].instructions}</em></p>
+              <p>Informacion nutricional: ${response.recipes[1].nutrition_facts}</em></p>
+              <p>Almuerzo: ${response.recipes[2].name}</em></p>
+              <p>Descripción: ${response.recipes[2].description}</em></p>
+              <p>Ingredientes: ${response.recipes[2].ingredients}</em></p>
+              <p>Instrucciones: ${response.recipes[2].instructions}</em></p>
+              <p>Informacion nutricional: ${response.recipes[2].nutrition_facts}</em></p>
+              <p>Cena: ${response.recipes[3].name}</em></p>
+              <p>Descripción: ${response.recipes[3].description}</em></p>
+              <p>Ingredientes: ${response.recipes[3].ingredients}</em></p>
+              <p>Instrucciones: ${response.recipes[3].instructions}</em></p>
+              <p>Informacion nutricional: ${response.recipes[3].nutrition_facts}</em></p>
+          </div>`;
+            $('#exampleModalScrollable2').find('.modal-title').html(htmlTemplateTitle)
+            $('#exampleModalScrollable2').find('.modal-body').html(htmlTemplate)
+            console.log('w', response);
+          }
+        })
+      });
+  
+      $('#btn-update-guideline').click(UpdateGuideline)
+      $('#btn-refresh-guideline').click(refresh)
+      var data = <%= raw @arrayRecipes.to_json %>;
+  
+       var table = $('#dietary').DataTable({
+    			"dom": '<"dt-buttons"Bf><"clear">lirtp',
+          buttons: [
+            { extend: 'copy', text: 'Copiar' },
+            { extend: 'excel', text: 'Excel' },
+            { extend: 'pdf', text: 'PDF' },
+            { extend: 'colvis', text: 'Ocultar columnas' },
+            { extend: 'colvisRestore', text: 'Restaurar columnas' },
+          ],
+         "scrollY":        "500px",
+         language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+          }
+      },
+            data: data,
+           'columns': [
+               {
+                   'className':      'details-control',
+                   'orderable':      false,
+                   'data':           null,
+                   'defaultContent': ''
+               },
+               { 'data': 'tiempo' },
+               { 'data': 'lunes' },
+               { 'data': 'martes' },
+               { 'data': 'miercoles' },
+               { 'data': 'jueves' },
+               { 'data': 'viernes' },
+               { 'data': 'sabado' },
+               { 'data': 'domingo' },
+           ],
+           'order': [[1, 'asc']]
+       } );
+  
+       $('#dietary tbody').on('click', 'td.details-control', function(){
+           var tr = $(this).closest('tr');
+           var row = table.row( tr );
+  
+           if(row.child.isShown()){
+               row.child.hide();
+               tr.removeClass('shown');
+           } else {
+               row.child(format(row.data())).show();
+               tr.addClass('shown');
+           }
+       });
+  
+       $('#btn-show-all-children').on('click', function(){
+           table.rows().every(function(){
+               if(!this.child.isShown()){
+                   this.child(format(this.data())).show();
+                   $(this.node()).addClass('shown');
+               }
+           });
+       });
+  
+       $('#lunes').on('click', function(){
+  
+       });
+  
+          table.buttons().container()
+          .appendTo( '#dietary_wrapper .col-md-12:eq(0)' );
+    });
+</script>
+<style>
+  .visible {}
+    .altura {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  
+      td.details-control {
+          background: url('https://cdn.rawgit.com/DataTables/DataTables/6c7ada53ebc228ea9bc28b1b216e793b1825d188/examples/resources/details_open.png') no-repeat center center;
+          cursor: pointer;
+      }
+      tr.shown td.details-control {
+          background: url('https://cdn.rawgit.com/DataTables/DataTables/6c7ada53ebc228ea9bc28b1b216e793b1825d188/examples/resources/details_close.png') no-repeat center center;
+      }
+      .form-control {
+        display: inline;
+        width: 100%;
+        height: calc(2.25rem + 2px);
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      }
+</style>
