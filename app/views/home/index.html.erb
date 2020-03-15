@@ -1,3 +1,17 @@
+<% if user_signed_in? %>
+  <li>
+    <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+  </li>
+<% else %>
+  <li>
+    <%= link_to('Login', new_user_session_path) %>
+  </li>
+<% end %>
+<% unless current_user %>
+  <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path %>
+<% else %>
+  <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+<% end %>
 <div class="card">
   <div class="card-body">
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -17,133 +31,144 @@
         <a class="nav-link" id="pills-cenas-tab" data-toggle="pill" href="#pills-cenas" role="tab" aria-controls="pills-contact" aria-selected="false">Cenas</a>
       </li>
     </ul>
+
     <div class="tab-content" id="pills-tabContent">
       <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab">
         <div class="container-fluid">
-          <div class="row d-flex justify-content-around">
-          <% @recipes.each do |recipe| %>
-            <div class="col-3">
-              <div class="card mb-5">
+          <div class="row">
+            <div class="col-sm-12 mb-3">
+              <input type="text" id="myFilter" class="form-control" onkeyup="myFunction()" placeholder="Busqueda por ..">
+            </div>
+          </div>
+          <div class="row" id="myItems">
+            <% @recipes.each do |recipe| %>
+              <div class="card mb-5 col-3">
                 <img src=<%= recipe.recipe_photo %> class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title"><%= recipe.recipe_name %></h5>
                   <p class="card-text"><%= recipe.recipe_description %></p>
                 </div>
-                <ul class="list-group list-group-flush">
+                <%# <ul class="list-group list-group-flush">
                   <li class="list-group-item">Cras justo odio</li>
                   <li class="list-group-item">Dapibus ac facilisis in</li>
                   <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
+                </ul> %>
                 <div class="card-body">
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
+                  <button type="button" class="btn btn-danger my-button" id="<%= recipe.recipe_name %>" name="[<%= recipe.id %>]" data-toggle="modal" data-target="#exampleModalScrollable">Detalle</button>
                 </div>
               </div>
-            </div>
             <% end %>
           </div>
         </div>
       </div>
       <div class="tab-pane fade" id="pills-desayunos" role="tabpanel" aria-labelledby="pills-desayunos-tab">
-      <div class="container-fluid">
-          <div class="row d-flex justify-content-around">
-          <% @desayunos.each do |desayuno| %>
-            <div class="col-3">
-              <div class="card mb-5">
-                <img src=<%= desayuno.recipe_photo %> class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title"><%= desayuno.recipe_name %></h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Cras justo odio</li>
-                  <li class="list-group-item">Dapibus ac facilisis in</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
-                <div class="card-body">
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
-                </div>
-              </div>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-12 mb-3">
+              <input type="text" id="myFilterDesayuno" class="form-control" onkeyup="myFunctionDesayuno()" placeholder="Busqueda por ..">
             </div>
+          </div>
+          <div class="row d-flex justify-content-around" id="myItemsDesayuno">
+            <% @desayunos.each do |desayuno| %>
+                <div class="card mb-5 col-3 cardDesayuno">
+                  <img src=<%= desayuno.recipe_photo %> class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= desayuno.recipe_name %></h5>
+                    <p class="card-text"><%= desayuno.recipe_description %></p>
+                  </div>
+                  <%# <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                  </ul> %>
+                  <div class="card-body">
+                    <button type="button" class="btn btn-danger my-button-desayuno" id="<%= desayuno.recipe_name %>" name="[<%= desayuno.id %>]" data-toggle="modal" data-target="#exampleModalScrollableDesayunos">Detalle</button>
+                  </div>
+                </div>
             <% end %>
           </div>
         </div>
       </div>
       <div class="tab-pane fade" id="pills-meriendas" role="tabpanel" aria-labelledby="pills-meriendas-tab">
-      <div class="container-fluid">
-          <div class="row d-flex justify-content-around">
-          <% @meriendas.each do |merienda| %>
-            <div class="col-3">
-              <div class="card mb-5">
-                <img src=<%= merienda.recipe_photo %> class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title"><%= merienda.recipe_name %></h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Cras justo odio</li>
-                  <li class="list-group-item">Dapibus ac facilisis in</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
-                <div class="card-body">
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
-                </div>
-              </div>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-12 mb-3">
+              <input type="text" id="myFilterMerienda" class="form-control" onkeyup="myFunctionMerienda()" placeholder="Busqueda por ..">
             </div>
+          </div>
+          <div class="row d-flex justify-content-around" id="myItemsMerienda">
+            <% @meriendas.each do |merienda| %>
+                <div class="card mb-5 col-3 cardMerienda">
+                  <img src=<%= merienda.recipe_photo %> class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= merienda.recipe_name %></h5>
+                    <p class="card-text"><%= merienda.recipe_description %></p>
+                  </div>
+                  <%# <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                  </ul> %>
+                  <div class="card-body">
+                    <button type="button" class="btn btn-danger my-button-merienda" id="<%= merienda.recipe_name %>" name="[<%= merienda.id %>]" data-toggle="modal" data-target="#exampleModalScrollableMeriendas">Detalle</button>
+                  </div>
+                </div>
             <% end %>
           </div>
         </div>
       </div>
       <div class="tab-pane fade" id="pills-almuerzos" role="tabpanel" aria-labelledby="pills-almuerzos-tab">
-      <div class="container-fluid">
-          <div class="row d-flex justify-content-around">
-          <% @almuerzos.each do |almuerzo| %>
-            <div class="col-3">
-              <div class="card mb-5">
-                <img src=<%= almuerzo.recipe_photo %> class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title"><%= almuerzo.recipe_name %></h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Cras justo odio</li>
-                  <li class="list-group-item">Dapibus ac facilisis in</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
-                <div class="card-body">
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
-                </div>
-              </div>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-12 mb-3">
+              <input type="text" id="myFilterAlmuerzo" class="form-control" onkeyup="myFunctionAlmuerzo()" placeholder="Busqueda por ..">
             </div>
+          </div>
+          <div class="row d-flex justify-content-around" id="myItemsAlmuerzo">
+            <% @almuerzos.each do |almuerzo| %>
+                <div class="card mb-5 col-3 cardAlmuerzo">
+                  <img src=<%= almuerzo.recipe_photo %> class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= almuerzo.recipe_name %></h5>
+                    <p class="card-text"><%= almuerzo.recipe_description %></p>
+                  </div>
+                  <%# <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                  </ul> %>
+                  <div class="card-body">
+                    <button type="button" class="btn btn-danger my-button-almuerzo" id="<%= almuerzo.recipe_name %>" name="[<%= almuerzo.id %>]" data-toggle="modal" data-target="#exampleModalScrollableAlmuerzos">Detalle</button>
+                  </div>
+                </div>
             <% end %>
           </div>
         </div>
       </div>
       <div class="tab-pane fade" id="pills-cenas" role="tabpanel" aria-labelledby="pills-cenas-tab">
-      <div class="container-fluid">
-          <div class="row d-flex justify-content-around">
-          <% @cenas.each do |cena| %>
-            <div class="col-3">
-              <div class="card mb-5">
-                <img src=<%= cena.recipe_photo %> class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title"><%= cena.recipe_name %></h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Cras justo odio</li>
-                  <li class="list-group-item">Dapibus ac facilisis in</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
-                <div class="card-body">
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
-                </div>
-              </div>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-12 mb-3">
+              <input type="text" id="myFilterCena" class="form-control" onkeyup="myFunctionCena()" placeholder="Busqueda por ..">
             </div>
+          </div>
+          <div class="row d-flex justify-content-around" id="myItemsCena">
+            <% @cenas.each do |cena| %>
+                <div class="card mb-5 col-3 cardCena">
+                  <img src=<%= cena.recipe_photo %> class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= cena.recipe_name %></h5>
+                   <p class="card-text"><%= cena.recipe_description %></p>
+                  </div>
+                  <%# <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                  </ul> %>
+                  <div class="card-body">
+                    <button type="button" class="btn btn-danger my-button-cena" id="<%= cena.recipe_name %>" name="[<%= cena.id %>]" data-toggle="modal" data-target="#exampleModalScrollableCenas">Detalle</button>
+                  </div>
+                </div>
             <% end %>
           </div>
         </div>
@@ -151,8 +176,108 @@
     </div>
   </div>
 </div>
+<!-- Modal Todos -->
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Desayunos -->
+<div class="modal fade" id="exampleModalScrollableDesayunos" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitleDesayunos" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitleDesayunos">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Meriendas -->
+<div class="modal fade" id="exampleModalScrollableMeriendas" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitleMeriendas" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitleMeriendas">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Almuerzos -->
+<div class="modal fade" id="exampleModalScrollableAlmuerzos" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitleAlmuerzos" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitleAlmuerzos">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> 
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Cenas -->
+<div class="modal fade" id="exampleModalScrollableCenas" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitleCenas" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitleCenas">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
-  /* Formatting function for row details - modify as you need */
+console.log(<%= raw @recipes_dtotal.to_json %>);
   function format ( d ) {
      return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
          '<tr>'+
@@ -160,18 +285,248 @@
              '<td>'+d.recipe_description+'</td>'+
              '<td><img src='+d.recipe_photo+'/></td>'+
          '</tr>'+
-        //  '<tr>'+
-        //      '<td>Extension number:</td>'+
-        //      '<td>'+d.extn+'</td>'+
-        //  '</tr>'+
-        //  '<tr>'+
-        //      '<td>Extra info:</td>'+
-        //      '<td>And any further details here (images etc)...</td>'+
-        //  '</tr>'+
      '</table>';
   }
   
+  function myFunction() {
+    var input, filter, cards, cardContainer, h5, title, i;
+    input = document.getElementById("myFilter");
+    filter = input.value.toUpperCase();
+    cardContainer = document.getElementById("myItems");
+    cards = cardContainer.getElementsByClassName("card");
+    for (i = 0; i < cards.length; i++) {
+        title = cards[i].querySelector(".card-body h5.card-title");
+        if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+            cards[i].style.display = "";
+  
+        } else {
+            cards[i].style.display = "none";
+        }
+    }
+  }
+
+  function myFunctionDesayuno() {
+    var input, filter, cards, cardContainer, h5, title, i;
+    input = document.getElementById("myFilterDesayuno");
+    filter = input.value.toUpperCase();
+    cardContainer = document.getElementById("myItemsDesayuno");
+    cards = cardContainer.getElementsByClassName("cardDesayuno");
+    for (i = 0; i < cards.length; i++) {
+        title = cards[i].querySelector(".card-body h5.card-title");
+        if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+            cards[i].style.display = "";
+  
+        } else {
+            cards[i].style.display = "none";
+        }
+    }
+  }
+
+  function myFunctionMerienda() {
+    var input, filter, cards, cardContainer, h5, title, i;
+    input = document.getElementById("myFilterMerienda");
+    filter = input.value.toUpperCase();
+    cardContainer = document.getElementById("myItemsMerienda");
+    cards = cardContainer.getElementsByClassName("cardMerienda");
+    for (i = 0; i < cards.length; i++) {
+        title = cards[i].querySelector(".card-body h5.card-title");
+        if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+            cards[i].style.display = "";
+  
+        } else {
+            cards[i].style.display = "none";
+        }
+    }
+  }
+
+  function myFunctionAlmuerzo() {
+    var input, filter, cards, cardContainer, h5, title, i;
+    input = document.getElementById("myFilterAlmuerzo");
+    filter = input.value.toUpperCase();
+    cardContainer = document.getElementById("myItemsAlmuerzo");
+    cards = cardContainer.getElementsByClassName("cardAlmuerzo");
+    for (i = 0; i < cards.length; i++) {
+        title = cards[i].querySelector(".card-body h5.card-title");
+        if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+            cards[i].style.display = "";
+  
+        } else {
+            cards[i].style.display = "none";
+        }
+    }
+  }
+
+  function myFunctionCena() {
+    var input, filter, cards, cardContainer, h5, title, i;
+    input = document.getElementById("myFilterCena");
+    filter = input.value.toUpperCase();
+    cardContainer = document.getElementById("myItemsCena");
+    cards = cardContainer.getElementsByClassName("cardCena");
+    for (i = 0; i < cards.length; i++) {
+        title = cards[i].querySelector(".card-body h5.card-title");
+        if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+            cards[i].style.display = "";
+  
+        } else {
+            cards[i].style.display = "none";
+        }
+    }
+  }
+
+
   $(document).ready(function() {
+
+    $('.my-button').bind('click', function(event) {
+        event.preventDefault();
+        let valuesIds = JSON.parse(event.target.name);
+        $.ajax({
+          type: "POST",
+          url: '/template_modal_all',
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+          contentType: 'application/json',
+          dataType: 'json',
+          data : JSON.stringify({ "valuesIds" : valuesIds}),
+          cache: true,
+          success: function(response) {
+            console.log(response)
+             let htmlTemplateTitle = `<div class="demo-container">
+              <p>${response.recipes[0].name}</p>
+          </div>`;
+            let htmlTemplate = `<div class="demo-container">
+              <p>Receta: ${response.recipes[0].name}</em></p>
+              <p>Descripción: ${response.recipes[0].description}</em></p>
+              <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
+              <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
+              <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
+          </div>`;
+          
+            $('#exampleModalScrollable').find('.modal-title').html(htmlTemplateTitle)
+            $('#exampleModalScrollable').find('.modal-body').html(htmlTemplate)
+          }
+        })
+      });
+
+      $('.my-button-desayuno').bind('click', function(event) {
+        event.preventDefault();
+        let valuesIds = JSON.parse(event.target.name);
+        $.ajax({
+          type: "POST",
+          url: '/template_modal_desayuno',
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+          contentType: 'application/json',
+          dataType: 'json',
+          data : JSON.stringify({ "valuesIds" : valuesIds}),
+          cache: true,
+          success: function(response) {
+            console.log(response)
+             let htmlTemplateTitle = `<div class="demo-container">
+              <p>${response.recipes[0].name}</p>
+          </div>`;
+            let htmlTemplate = `<div class="demo-container">
+              <p>Receta: ${response.recipes[0].name}</em></p>
+              <p>Descripción: ${response.recipes[0].description}</em></p>
+              <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
+              <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
+              <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
+          </div>`;
+          
+            $('#exampleModalScrollableDesayunos').find('.modal-title').html(htmlTemplateTitle)
+            $('#exampleModalScrollableDesayunos').find('.modal-body').html(htmlTemplate)
+          }
+        })
+      });
+
+      $('.my-button-merienda').bind('click', function(event) {
+        event.preventDefault();
+        let valuesIds = JSON.parse(event.target.name);
+        $.ajax({
+          type: "POST",
+          url: '/template_modal_merienda',
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+          contentType: 'application/json',
+          dataType: 'json',
+          data : JSON.stringify({ "valuesIds" : valuesIds}),
+          cache: true,
+          success: function(response) {
+            console.log(response)
+             let htmlTemplateTitle = `<div class="demo-container">
+              <p>${response.recipes[0].name}</p>
+          </div>`;
+            let htmlTemplate = `<div class="demo-container">
+              <p>Receta: ${response.recipes[0].name}</em></p>
+              <p>Descripción: ${response.recipes[0].description}</em></p>
+              <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
+              <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
+              <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
+          </div>`;
+          
+            $('#exampleModalScrollableMeriendas').find('.modal-title').html(htmlTemplateTitle)
+            $('#exampleModalScrollableMeriendas').find('.modal-body').html(htmlTemplate)
+          }
+        })
+      });
+
+      $('.my-button-almuerzo').bind('click', function(event) {
+        event.preventDefault();
+        let valuesIds = JSON.parse(event.target.name);
+        $.ajax({
+          type: "POST",
+          url: '/template_modal_almuerzo',
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+          contentType: 'application/json',
+          dataType: 'json',
+          data : JSON.stringify({ "valuesIds" : valuesIds}),
+          cache: true,
+          success: function(response) {
+            console.log(response)
+             let htmlTemplateTitle = `<div class="demo-container">
+              <p>${response.recipes[0].name}</p>
+          </div>`;
+            let htmlTemplate = `<div class="demo-container">
+              <p>Receta: ${response.recipes[0].name}</em></p>
+              <p>Descripción: ${response.recipes[0].description}</em></p>
+              <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
+              <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
+              <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
+          </div>`;
+          
+            $('#exampleModalScrollableAlmuerzos').find('.modal-title').html(htmlTemplateTitle)
+            $('#exampleModalScrollableAlmuerzos').find('.modal-body').html(htmlTemplate)
+          }
+        })
+      });
+
+      $('.my-button-cena').bind('click', function(event) {
+        event.preventDefault();
+        let valuesIds = JSON.parse(event.target.name);
+        $.ajax({
+          type: "POST",
+          url: '/template_modal_cena',
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+          contentType: 'application/json',
+          dataType: 'json',
+          data : JSON.stringify({ "valuesIds" : valuesIds}),
+          cache: true,
+          success: function(response) {
+            console.log(response)
+             let htmlTemplateTitle = `<div class="demo-container">
+              <p>${response.recipes[0].name}</p>
+          </div>`;
+            let htmlTemplate = `<div class="demo-container">
+              <p>Receta: ${response.recipes[0].name}</em></p>
+              <p>Descripción: ${response.recipes[0].description}</em></p>
+              <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
+              <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
+              <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
+          </div>`;
+          
+            $('#exampleModalScrollableCenas').find('.modal-title').html(htmlTemplateTitle)
+            $('#exampleModalScrollableCenas').find('.modal-body').html(htmlTemplate)
+          }
+        })
+      });
+
+    
     let dataDesayuno = <%= raw @recipesjoin.to_json %>.filter(category => category.category_name === "desayuno");
     let dataMerienda = <%= raw @recipesjoin.to_json %>.filter(category => category.category_name === "merienda");
     let dataAlmuerzo = <%= raw @recipesjoin.to_json %>.filter(category => category.category_name === "almuerzo");
@@ -322,129 +677,97 @@
          'order': [[1, 'asc']]
      } );
   
-     // Add event listener for opening and closing details
      $('#desayunos tbody').on('click', 'td.details-control', function(){
          var tr = $(this).closest('tr');
          var row = tableDesayunos.row( tr );
   
          if(row.child.isShown()){
-             // This row is already open - close it
              row.child.hide();
              tr.removeClass('shown');
          } else {
-             // Open this row
              row.child(format(row.data())).show();
              tr.addClass('shown');
          }
      });
   
-     // Add event listener for opening and closing details
      $('#meriendas tbody').on('click', 'td.details-control', function(){
          var tr = $(this).closest('tr');
          var row = tableMeriendas.row( tr );
   
          if(row.child.isShown()){
-             // This row is already open - close it
              row.child.hide();
              tr.removeClass('shown');
          } else {
-             // Open this row
              row.child(format(row.data())).show();
              tr.addClass('shown');
          }
      });
   
-      // Add event listener for opening and closing details
      $('#almuerzos tbody').on('click', 'td.details-control', function(){
          var tr = $(this).closest('tr');
          var row = tableAlmuerzos.row( tr );
   
          if(row.child.isShown()){
-             // This row is already open - close it
              row.child.hide();
              tr.removeClass('shown');
          } else {
-             // Open this row
              row.child(format(row.data())).show();
              tr.addClass('shown');
          }
      });
   
-     // Add event listener for opening and closing details
      $('#cenas tbody').on('click', 'td.details-control', function(){
          var tr = $(this).closest('tr');
          var row = tableCenas.row( tr );
   
          if(row.child.isShown()){
-             // This row is already open - close it
              row.child.hide();
              tr.removeClass('shown');
          } else {
-             // Open this row
              row.child(format(row.data())).show();
              tr.addClass('shown');
          }
      });
   
-     // Handle click on "Expand All" button
      $('#btn-show-all-children-desayunos').on('click', function(){
-         // Enumerate all rows
          tableDesayunos.rows().every(function(){
-             // If row has details collapsed
              if(!this.child.isShown()){
-                 // Open this row
                  this.child(format(this.data())).show();
                  $(this.node()).addClass('shown');
              }
          });
      });
   
-     // Handle click on "Expand All" button
      $('#btn-show-all-children-meriendas').on('click', function(){
-         // Enumerate all rows
          tableMeriendas.rows().every(function(){
-             // If row has details collapsed
              if(!this.child.isShown()){
-                 // Open this row
                  this.child(format(this.data())).show();
                  $(this.node()).addClass('shown');
              }
          });
      });
   
-     // Handle click on "Expand All" button
      $('#btn-show-all-children-almuerzos').on('click', function(){
-         // Enumerate all rows
          tableAlmuerzos.rows().every(function(){
-             // If row has details collapsed
              if(!this.child.isShown()){
-                 // Open this row
                  this.child(format(this.data())).show();
                  $(this.node()).addClass('shown');
              }
          });
      });
   
-     // Handle click on "Expand All" button
      $('#btn-show-all-children-cenas').on('click', function(){
-         // Enumerate all rows
          tableCenas.rows().every(function(){
-             // If row has details collapsed
              if(!this.child.isShown()){
-                 // Open this row
                  this.child(format(this.data())).show();
                  $(this.node()).addClass('shown');
              }
          });
      });
   
-     // Handle click on "Collapse All" button
      $('#btn-hide-all-children-desayunos').on('click', function(){
-         // Enumerate all rows
          tableDesayunos.rows().every(function(){
-             // If row has details expanded
              if(this.child.isShown()){
-                 // Collapse row details
                  this.child.hide();
                  $(this.node()).removeClass('shown');
              }
@@ -452,11 +775,8 @@
      });
   
      $('#btn-hide-all-children-meriendas').on('click', function(){
-         // Enumerate all rows
          tableMeriendas.rows().every(function(){
-             // If row has details expanded
              if(this.child.isShown()){
-                 // Collapse row details
                  this.child.hide();
                  $(this.node()).removeClass('shown');
              }
@@ -464,11 +784,8 @@
      });
   
      $('#btn-hide-all-children-almuerzos').on('click', function(){
-         // Enumerate all rows
          tableAlmuerzos.rows().every(function(){
-             // If row has details expanded
              if(this.child.isShown()){
-                 // Collapse row details
                  this.child.hide();
                  $(this.node()).removeClass('shown');
              }
@@ -476,11 +793,8 @@
      });
   
      $('#btn-hide-all-children-cenas').on('click', function(){
-         // Enumerate all rows
          tableCenas.rows().every(function(){
-             // If row has details expanded
              if(this.child.isShown()){
-                 // Collapse row details
                  this.child.hide();
                  $(this.node()).removeClass('shown');
              }
