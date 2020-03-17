@@ -69,6 +69,6 @@ class MeasureUnitsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def measure_unit_params
-      params.require(:measure_unit).permit(:description)
+      params.require(:measure_unit).permit(:name)
     end
 end

@@ -1,27 +1,74 @@
 <%= form_with(model: recipe, local: true) do |form| %>
   <% if recipe.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
-
-      <ul>
-        <% recipe.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+    <div class="alert alert-danger" role="alert">
+      <div id="error_explanation">
+        <h4 class="alert-heading"><%= pluralize(recipe.errors.count, "error(es)") %> prohibió guardar esta receta:</h4>
+        <hr>
+        <p>
+          <% recipe.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </p>
+      </div>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="row">
+    <div class="col">
+      <div class="field">
+        <%= form.label :name, 'Nombre' %>
+        <%= form.text_field :name, :class=>"form-control" %>
+      </div>
+    </div>
+    <div class="col">
+      <div class="field">
+        <%= form.label :description, 'Descripción' %>
+        <%= form.text_field :description, :class=>"form-control" %>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+  <br/>
+  <div class="row">
+    <div class="col">
+      <div class="field">
+        <%= form.label :category_id, 'Categoría' %>
+        <%= select_tag 'recipe[category_id]', options_from_collection_for_select(Category.all, :id, :name),:class => "form-control input-sm selectpicker border", data: { 'live-search' => 'true' }, :id=>"recipe_category_id" %>
+      </div>
+    </div>
+    <div class="col">
+      <div class="field">
+        <%= form.label :instructions, 'Preparación:' %>
+        <%= form.text_field :instructions, :class=>"form-control" %>
+      </div>
+    </div>
   </div>
-
+  <br/>
+  <div class="row">
+    <div class="col-6">
+      <div class="field">
+        <%= form.label :nutrition_facts, 'Valor nutricional:' %>
+        <%= form.text_field :nutrition_facts, :class=>"form-control" %>
+      </div>
+    </div>
+  </div>
+  <br/>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Guardar cambios", :class=>"btn btn-primary state_buttom" %>
   </div>
 <% end %>
+<script>
+  $(document).ready(function() {
+    $('.selectpicker').selectpicker('refresh');
+    // $('#recipe_name' && '#recipe_description' && '#recipe_category_id' && '#recipe_instructions' && '#recipe_nutrition_facts').change(function() {
+    //   // $('.state_buttom').attr("disabled", false);
+    // });
+  
+    // $("#form input").keyup(function() {
+    //     var form = $(this).parents("#form");
+    //     if(check) {
+    //         $(".state_buttom").prop("disabled", false);
+    //     }
+    //     else {
+    //         $(".state_buttom").prop("disabled", true);
+    //     }
+    });
+</script>
