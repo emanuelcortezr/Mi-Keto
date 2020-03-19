@@ -5,8 +5,6 @@
         <h4 class="header-title">Pautas Alimenticias</h4>
         <div class="data-tables datatable-dark">
           <div class="d-flex justify-content-between">
-            <div><button id="btn-show-all-children" type="button" class="btn btn-primary"><i class="fa fa-expand "></i>&nbsp;&nbsp;Mostrar Detalles</button>
-              <button id="btn-hide-all-children" type="button" class="btn btn-light"><i class="fa fa-compress"></i>&nbsp;&nbsp;Colapsar</button></div>
             <button id="btn-update-guideline" type="button" class="btn btn-primary" ><i class="fa fa-save "></i>&nbsp;&nbsp;Guardar pauta</button></div>
         </div>
         <hr>
@@ -17,17 +15,12 @@
   </div>
 </div>
 <div class="container-fluid">
-  <div class="row">
-    <div class="col">
-      <div class="card text-center">
-        <div class="card-header">
-          <h4>Pauta Generada al azar&nbsp;&nbsp;<i class="fa fa-random"></i></h4>
-        </div>
-      </div>
-      <%# <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p> %>
-    </div>
-  </div>
   <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between">
+        <div><button type="button" class="btn btn-light">Pauta Generada al azar</button></div>
+      </div>
+    </div>
     <div class="card-body">
       <div class="row">
         <% @array.each do |recipe| %>
@@ -40,7 +33,6 @@
                 <h5 class="card-title">Desayuno: <br/>
                   <%= recipe["desayuno"] %></h5>
                 <p class="card-text"><%= recipe["description_d"]%></p>
-                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
               </div>
             </div>
             <div class="card">
@@ -48,7 +40,6 @@
                 <h5 class="card-title">Merienda:  <br/>
                   <%= recipe["merienda"] %></h5>
                 <p class="card-text"><%= recipe["description_m"]%></p>
-                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
               </div>
             </div>
             <div class="card">
@@ -56,7 +47,6 @@
                 <h5 class="card-title">Almuerzo:  <br/>
                   <%= recipe["almuerzo"] %></h5>
                 <p class="card-text"><%= recipe["description_a"]%></p>
-                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
               </div>
             </div>
             <div class="card">
@@ -64,7 +54,6 @@
                 <h5 class="card-title">Cena: <br/>
                   <%= recipe["cena"] %></h5>
                 <p class="card-text"><%= recipe["description_c"]%></p>
-                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
               </div>
               <div class="card-footer text-center">
                 <button  type="button" class="btn btn-primary btn-lg btn-block my-button" id="<%= recipe["day"] %>" name="[<%= recipe["id_d"] %>, <%= recipe["id_m"] %>, <%= recipe["id_a"] %>, <%=recipe["id_c"] %>]" data-toggle="modal" data-target="#exampleModalScrollable">Detalle</button>
@@ -92,75 +81,67 @@
         ...
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
 </div>
 <% if @current_user.guidelines.length > 0 %>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col">
-        <div class="card text-center">
-          <div class="card-header">
-            <h4>Pauta Guardada&nbsp;&nbsp;<i class="fa fa-save"></i></i></h4>
+  <div class="container-fluid mb-5">
+    <div class="card">
+      <div class="card-header">
+        <div class="d-flex justify-content-between">
+          <div><button type="button" class="btn btn-light">Pauta Guardada</button></div>
+          <div>
+            <%= link_to "Pauta alimenticia (PDF)", dietary_path(@obj, format: "pdf"), :class=>"btn btn-danger" %>
+            <%= link_to "Lista de Ingredientes (PDF)", list_path(@totales_ingredients, format: "pdf"), :class=>"btn btn-danger" %>
+          </div>
         </div>
       </div>
-      <%# <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p> %>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-body">
-      <div class="row">
-        <% @obj.each do |recipe| %>
-          <div class="col altura">
-            <div class="card">
-              <div class="card-header text-center">
-                <h5><%= recipe[:day] %></h5>
+      <div class="card-body">
+        <div class="row">
+          <% @obj.each do |recipe| %>
+            <div class="col altura">
+              <div class="card">
+                <div class="card-header text-center">
+                  <h5><%= recipe[:day] %></h5>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">Desayuno: <br/>
+                    <%= recipe[:desayuno] %></h5>
+                  <p class="card-text"><%= recipe[:description_d] %></p>
+                </div>
               </div>
-              <div class="card-body">
-                <h5 class="card-title">Desayuno: <br/>
-                  <%= recipe[:desayuno] %></h5>
-                <p class="card-text"><%= recipe[:description_d] %></p>
-                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Merienda:  <br/>
+                    <%= recipe[:merienda] %></h5>
+                  <p class="card-text"><%= recipe[:description_m] %></p>
+                </div>
               </div>
-            </div>
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Merienda:  <br/>
-                  <%= recipe[:merienda] %></h5>
-                <p class="card-text"><%= recipe[:description_m] %></p>
-                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Almuerzo:  <br/>
+                    <%= recipe[:almuerzo] %></h5>
+                  <p class="card-text"><%= recipe[:description_a] %></p>
+                </div>
               </div>
-            </div>
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Almuerzo:  <br/>
-                  <%= recipe[:almuerzo] %></h5>
-                <p class="card-text"><%= recipe[:description_a] %></p>
-                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Cena: <br/>
-                  <%= recipe[:cena] %></h5>
-                <p class="card-text"><%= recipe[:description_c] %></p>
-                <%# <a href="#" class="btn btn-primary">Go somewhere</a> %>
-              </div>
-              <div class="card-footer text-center">
-                <button  type="button" class="btn btn-primary btn-lg btn-block my-button2" id="<%= recipe[:day] %>" name="[<%= recipe[:id_d] %>, <%= recipe[:id_m] %>, <%= recipe[:id_a] %>, <%=recipe[:id_c] %>]" data-toggle="modal" data-target="#exampleModalScrollable2">Detalle</button>
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Cena: <br/>
+                    <%= recipe[:cena] %></h5>
+                  <p class="card-text"><%= recipe[:description_c] %></p>
+                </div>
+                <div class="card-footer text-center">
+                  <button  type="button" class="btn btn-primary btn-lg btn-block my-button2" id="<%= recipe[:day] %>" name="[<%= recipe[:id_d] %>, <%= recipe[:id_m] %>, <%= recipe[:id_a] %>, <%=recipe[:id_c] %>]" data-toggle="modal" data-target="#exampleModalScrollable2">Detalle</button>
+                </div>
               </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<%= link_to "Pauta alimenticia (PDF)", dietary_path(@obj, format: "pdf"), :class=>"btn btn-danger" %>
-
 <% end %>
 <!-- Modal 2-->
 <div class="modal fade" id="exampleModalScrollable2" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle2" aria-hidden="true">
@@ -176,14 +157,11 @@
         ...
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
 </div>
-<%= link_to "Lista de Ingredientes (PDF)", list_path(@totales_ingredients, format: "pdf"), :class=>"btn btn-danger" %>
-
 <script>
   console.log(<%= raw @totales_ingredients.to_json %>);
       function format ( d ) {
@@ -217,15 +195,33 @@
           data : JSON.stringify({ "guidelines" : [obj]}),
           cache: true,
           success: function(data) {
-            refresh()
+            Swal.fire({
+              toast:true,
+              position: 'top-end',
+              title: 'Se ha guardado la pauta semanal!',
+              html: `Adelante, que tu puedes <i class="fa fa-smile-wink"></i>`,
+              icon: 'success',
+              confirmButtonText: 'Ok'
+              }).then((result) => {
+          // Reload the Page
+          location.reload();
+        });
           }
         })
       }
   
-  
-  
       function refresh() {
+        Swal.fire({
+          toast:true,
+          position: 'top-end',
+          icon: 'success',
+          title: 'Se generó una nueva pauta semanal',
+          showConfirmButton: false,
+          timer: 1500
+        }).then((result) => {
+          // Reload the Page
           location.reload();
+        });
       }
   
     $(document).ready(function() {
@@ -276,7 +272,7 @@
           }
         })
       });
-
+  
       $('.my-button2').bind('click', function(event) {
         event.preventDefault();
         let valuesIds = JSON.parse(event.target.name);
