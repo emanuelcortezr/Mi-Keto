@@ -16,11 +16,17 @@
                 data : JSON.stringify(data),
                 cache: true,
                 success: function(response) {
-                    console.log(response);
-  
                     if (!response.recipes.length) {
                         $('#cardContent').append("No se encontraron recetas con los ingredientes ingresados. ");
                     } else {
+                        Swal.fire({
+                        toast:true,
+                        position: 'top-end',
+                        title: 'Se encontraron varias recetas!',
+                        html: `con lo que tienes en la despensa`,
+                        icon: 'success',
+                        timer: 3000
+                        });
                         let recipes = response.recipes.map((value)=> {
                         return `<div class="card">
                         <div class="card-header">
@@ -39,11 +45,8 @@
                         $('#cardContent').append(element);
                     });
                     }
-  
-  
                 }
             })
-  
           }
       });
   });

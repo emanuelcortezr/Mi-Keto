@@ -10,8 +10,8 @@
               <div class="col-12">
                 <div class="field">
                   <label for="exampleFormControlInput1">Ingredientes que tienes en la despensa</label>
-                  <%= select_tag  "ingredient_ids[]", options_from_collection_for_select(Ingredient.all, "id", "name"), :id => "ingredient", 
-                    multiple: true, size: '8%', class: "form-control input-sm selectpicker", data: { 'live-search' => 'true' } %>
+                  <%= select_tag  "ingredient_ids[]", options_from_collection_for_select(Ingredient.all, "id", "name"), title:"Ninguno seleccionado", :id => "ingredient", 
+                    multiple: true, size: '8%', class: "form-control input-sm selectpicker border border-secondary", data: { 'live-search' => 'true' } %>
                 </div>
               </div>
             </div>
@@ -21,7 +21,7 @@
                 <div class="field">
                   <label for="exampleFormControlInput1">Categoría</label>
                   <%= select_tag "category_id", options_from_collection_for_select(Category.all, "id", "name"), 
-                    size: '8%', class: "form-control input-sm selectpicker", data: { 'live-search' => 'true' }, 
+                    size: '8%', class: "form-control input-sm selectpicker border border-secondary", data: { 'live-search' => 'true' }, 
                     title:"Ninguno seleccionado", :id=>"category" %>
                 </div>
               </div>
@@ -43,36 +43,28 @@
     </div>
   </div>
 </div>
-<%# <script>
-  $(()=>{
-    $('select').selectpicker();
+<script>
+$(document).ready(function() {
     $('*:not(.bootstrap-select) > .selectpicker').selectpicker('refresh');
-    $('#randomAvatar').click(randomAvatar);
-  
-    function randomAvatar() {
-      let random = Math.floor(Math.random() * (49) ) + 1;
-      let imageRandom = "/images/avatars/" + random + ".png"
-      // console.log(imageRandom);
-      $.ajax({
-        type: "PATCH",
-        url: '/profile_photo',
-        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-        contentType: 'application/json',
-        dataType: 'json',
-        data : JSON.stringify({ "photo" : imageRandom }),
-        cache: true, // otherwise will get fresh copy every page load
-        success: function() {
-          location.reload();
-        }
-      })
-  
-    }  
-  });
+});
 </script>
 <style>
-  .avatar {
-    width: 200px;
-    height: 210px
-  }
+.bootstrap-select .btn {
+  background-color: #e0e0e0;
+  border-style: solid;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  font-size: 16px;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.bootstrap-select .dropdown-menu {
+  margin: 15px 0 0;
+}
+select::-ms-expand {
+  display: none;
+}
 </style>
- %>
