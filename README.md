@@ -73,7 +73,7 @@ https://mi-keto.herokuapp.com/
 ![Login](https://github.com/emanuelcortezr/Mi-Keto/blob/master/public/images/signup.png)
 
 ## Pantalla principal:
-![Login](https://github.com/emanuelcortezr/Mi-Keto/blob/master/public/images/signup.png)
+![Login](https://github.com/emanuelcortezr/Mi-Keto/blob/master/public/images/home.png)
 
 ## Pantalla de Pautas alimenticias:
 ![Login](https://github.com/emanuelcortezr/Mi-Keto/blob/master/public/images/pautas.png)
