@@ -1,22 +1,28 @@
 <%= form_with(model: ingredient, local: true) do |form| %>
   <% if ingredient.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(ingredient.errors.count, "error") %> prohibited this ingredient from being saved:</h2>
-
-      <ul>
-        <% ingredient.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+    <div class="alert alert-danger" role="alert">
+      <div id="error_explanation">
+        <h4 class="alert-heading"><%= pluralize(ingredient.errors.count, "error(es)") %> prohibió guardar este ingrediente:</h4>
+        <hr>
+        <p>
+          <% ingredient.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </p>
+      </div>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="row">
+    <div class="col-6">
+      <div class="field">
+        <%= form.label :name, 'Nombre' %>
+        <%= form.text_field :name, :class=>"form-control" %>
+      </div>
+    </div>
   </div>
-
+  <br/>
+  <br/>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Guardar cambios", :class=>"btn btn-primary state_buttom" %>
   </div>
 <% end %>

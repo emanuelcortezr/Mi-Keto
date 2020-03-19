@@ -1,5 +1,13 @@
 <div class="container mt-5">
   <div class="card">
+    <div class="card-header d-flex justify-content-between">
+      <div>
+        <button type="button" class="btn btn-light">Recetas</button>
+      </div>
+      <div>
+      </div>
+      <%= link_to 'Crear Receta', new_recipe_path, :class=> "btn btn-primary" %>
+    </div>
     <div class="row">
       <div class="col-2">
       </div>
@@ -8,20 +16,12 @@
     <div class="row">
       <div class="col">
         <div class="card-body">
-          <p id="notice"><%= notice %></p>
-          <div class="row">
-            <div class="col-2">
-              <h1>Recetas</h1>
-            </div>
-            <div class="offset-8 col-2">
-              <%= link_to 'Crear Receta', new_recipe_path, :class=> "btn btn-primary" %>
-            </div>
-          </div>
-          <table id="table_id" class="display">
+          
+          <table id="table_id" class="table table-striped">
             <thead>
               <tr>
                 <th>Nombre de la receta</th>
-                <th>Descripcion</th>
+                <th>Descripción</th>
                 <th colspan="3"></th>
               </tr>
             </thead>
@@ -32,7 +32,7 @@
                   <td><%= recipe.description %></td>
                   <td><%= link_to ('<i class="fa fa-search"></i>').html_safe, recipe %></td>
                   <td><%= link_to ('<i class="fa fa-pencil"></i>').html_safe, edit_recipe_path(recipe) %></td>
-                  <td><%= link_to ('<i class="fa fa-trash"></i>').html_safe, recipe, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                  <td><%= link_to ('<i class="fa fa-trash"></i>').html_safe, recipe, method: :delete, data: { confirm: '¿Esta seguro de eliminar el registro?' } %></td>
                 </tr>
               <% end %>
             </tbody>
@@ -43,11 +43,3 @@
   </div>
 </div>
 <br>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
-<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
-<script>
-  $(document).ready( function () {
-  $('#table_id').DataTable();
-  });
-</script>

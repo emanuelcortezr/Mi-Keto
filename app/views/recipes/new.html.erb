@@ -1,15 +1,15 @@
-<div class= "container">
-<div class= "row">
-<div class= "col">
-<div class="card">
-  <div class="card-body">
-  <h1>New Recipe</h1>
-
-<%= render 'form', recipe: @recipe %>
-
-<%= link_to 'Back', recipes_path %>
+<div class= "container mt-4">
+  <div class= "row">
+    <div class= "col">
+      <div class="card">
+        <div class="card-body">
+          <h2>Nueva receta</h2>
+          <%= render 'form', recipe: @recipe %>
+          <%= link_to 'Regresar', recipes_path %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-</div>
-</div>
-</div>
+<script>
+</script>

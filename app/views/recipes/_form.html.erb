@@ -31,7 +31,7 @@
     <div class="col">
       <div class="field">
         <%= form.label :category_id, 'Categoría' %>
-        <%= select_tag 'recipe[category_id]', options_from_collection_for_select(Category.all, :id, :name),:class => "form-control input-sm selectpicker border", data: { 'live-search' => 'true' }, :id=>"recipe_category_id" %>
+        <%= select_tag 'recipe[category_id]', options_from_collection_for_select(Category.all, :id, :name),:class => "form-control input-sm selectpicker border border-secondary", data: { 'live-search' => 'true' }, title:"Ninguno seleccionado", :id=>"recipe_category_id" %>
       </div>
     </div>
     <div class="col">
@@ -58,17 +58,25 @@
 <script>
   $(document).ready(function() {
     $('.selectpicker').selectpicker('refresh');
-    // $('#recipe_name' && '#recipe_description' && '#recipe_category_id' && '#recipe_instructions' && '#recipe_nutrition_facts').change(function() {
-    //   // $('.state_buttom').attr("disabled", false);
-    // });
-  
-    // $("#form input").keyup(function() {
-    //     var form = $(this).parents("#form");
-    //     if(check) {
-    //         $(".state_buttom").prop("disabled", false);
-    //     }
-    //     else {
-    //         $(".state_buttom").prop("disabled", true);
-    //     }
     });
 </script>
+<style>
+.bootstrap-select .btn {
+  background-color: #e0e0e0;
+  border-style: solid;
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  font-size: 16px;
+  margin-bottom: 10px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.bootstrap-select .dropdown-menu {
+  margin: 15px 0 0;
+}
+select::-ms-expand {
+  display: none;
+}
+</style>

@@ -1,22 +1,28 @@
 <%= form_with(model: measure_unit, local: true) do |form| %>
   <% if measure_unit.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(measure_unit.errors.count, "error") %> prohibited this measure_unit from being saved:</h2>
-
-      <ul>
-        <% measure_unit.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+    <div class="alert alert-danger" role="alert">
+      <div id="error_explanation">
+        <h4 class="alert-heading"><%= pluralize(measure_unit.errors.count, "error(es)") %> prohibió guardar esta unidad de medida:</h4>
+        <hr>
+        <p>
+          <% measure_unit.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </p>
+      </div>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_area :name %>
+  <div class="row">
+    <div class="col-6">
+      <div class="field">
+        <%= form.label :name, 'Nombre' %>
+        <%= form.text_field :name, :class=>"form-control" %>
+      </div>
+    </div>
   </div>
-
+  <br/>
+  <br/>
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Guardar cambios", :class=>"btn btn-primary state_buttom" %>
   </div>
 <% end %>
