@@ -84,7 +84,7 @@ https://mi-keto.herokuapp.com/
 ## Pantalla de Ideas para cocinar con lo que se tiene en la despensa:
 ![Login](https://github.com/emanuelcortezr/Mi-Keto/blob/master/public/images/cocinar.png)
 
-## Pantalla de Ideas para cocinar con lo que se tiene en la despensa:
+## Pantalla de Perfil de usuario:
 ![Login](https://github.com/emanuelcortezr/Mi-Keto/blob/master/public/images/perfil.png)
 
 
