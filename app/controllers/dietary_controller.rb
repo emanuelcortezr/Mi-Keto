@@ -1,15 +1,15 @@
 class DietaryController < ApplicationController
+  layout "application"
+
   def index
+    select_texto = "recipes.id as id, recipes.name as recipe_name, recipes.description as recipe_description, categories.name as category_name"
     params[:seed] ||= Random.new_seed
     srand params[:seed].to_i
-    @recipes_name = Recipe.where.not(ingredients: current_user.ingredients).select("recipes.id as id, recipes.name as recipe_name, categories.name as category_name").joins(:category)
-    recipes_total = Recipe.where.not(ingredients: current_user.ingredients).select("recipes.id, recipes.name as recipe_name, categories.name as category_name").joins(:category)
+    @recipes_name = Recipe.joins(:category).joins(:ingredients).select(select_texto).where.not(ingredients: { id: current_user.ingredients.map { |item| item.id } }).distinct
 
-    desayuno = recipes_total.where("categories.name = 'desayuno'").first
-    desayuno_esp = recipes_total.where("categories.name = 'desayuno'").select("recipes.id as id, recipes.name as recipe_name, recipes.description as recipe_description").first
-    ayuno = Recipe.select("recipes.id, recipes.name as recipe_name, categories.name as category_name").joins(:category).find_by(name: "Ayuno")
-    merienda = recipes_total.where("categories.name = 'merienda'").first
-    merienda_esp = recipes_total.where("categories.name = 'merienda'").select("recipes.id as id, recipes.name as recipe_name, recipes.description as recipe_description").first
+    desayuno_esp = Recipe.joins(:category).joins(:ingredients).select(select_texto).where("categories.name = 'desayuno'").distinct.first
+    ayuno = Recipe.joins(:category).select(select_texto).where(name: "Ayuno").first
+    merienda_esp = Recipe.joins(:category).joins(:ingredients).select(select_texto).where("categories.name = 'merienda'").distinct.first
     desayunos = [desayuno_esp, desayuno_esp, desayuno_esp, desayuno_esp, desayuno_esp, desayuno_esp, desayuno_esp]
     daysMap = { "Lunes" => 0, "Martes" => 1, "Miércoles" => 2, "Jueves" => 3, "Viernes" => 4, "Sabado" => 5, "Domingo" => 6 }
 
@@ -21,8 +21,8 @@ class DietaryController < ApplicationController
     end
 
     meriendas = [merienda_esp, merienda_esp, merienda_esp, merienda_esp, merienda_esp, merienda_esp, merienda_esp]
-    almuerzos = recipes_total.where("categories.name = 'almuerzo'").select("recipes.id as id, recipes.name as recipe_name, recipes.description as recipe_description").shuffle.first(7)
-    cenas = recipes_total.where("categories.name = 'cena'").select("recipes.id as id, recipes.name as recipe_name, recipes.description as recipe_description").shuffle.first(7)
+    almuerzos = Recipe.joins(:category).joins(:ingredients).select(select_texto).where("categories.name = 'almuerzo'").distinct.shuffle.first(7)
+    cenas = Recipe.joins(:category).joins(:ingredients).select(select_texto).where("categories.name = 'cena'").distinct.shuffle.first(7)
     totalFoods = desayunos + meriendas + almuerzos + cenas
     @totales_ingredients = Ingredient.where(recipes: totalFoods.map { |item| item.id }).distinct
     @arrayRecipes = []
@@ -69,7 +69,7 @@ class DietaryController < ApplicationController
                               disposition: "inline"
       end
     end
-    
+
     # Pauta Generada al azar
 
     food_hash.map { |key, value|
@@ -90,22 +90,20 @@ class DietaryController < ApplicationController
   end
 
   def list_ingredients
+    select_texto = "recipes.id as id, recipes.name as recipe_name, recipes.description as recipe_description, categories.name as category_name"
     params[:seed] ||= Random.new_seed
     srand params[:seed].to_i
-    @recipes_name = Recipe.where.not(ingredients: current_user.ingredients).select("recipes.id as id, recipes.name as recipe_name, categories.name as category_name").joins(:category)
-    recipes_total = Recipe.where.not(ingredients: current_user.ingredients).select("recipes.id, recipes.name as recipe_name, categories.name as category_name").joins(:category)
+    @recipes_name = Recipe.joins(:category).joins(:ingredients).select(select_texto).where.not(ingredients: { id: current_user.ingredients.map { |item| item.id } }).distinct
 
-    desayuno = recipes_total.where("categories.name = 'desayuno'").first
-    desayuno_esp = recipes_total.where("categories.name = 'desayuno'").select("recipes.id as id, recipes.name as recipe_name, recipes.description as recipe_description").first
-    ayuno = Recipe.select("recipes.id, recipes.name as recipe_name, categories.name as category_name").joins(:category).find_by(name: "Ayuno")
-    merienda = recipes_total.where("categories.name = 'merienda'").first
-    merienda_esp = recipes_total.where("categories.name = 'merienda'").select("recipes.id as id, recipes.name as recipe_name, recipes.description as recipe_description").first
+    desayuno_esp = Recipe.joins(:category).joins(:ingredients).select(select_texto).where("categories.name = 'desayuno'").first
+    ayuno = Recipe.joins(:category).joins(:ingredients).select(select_texto).where(name: "Ayuno").first
+    merienda_esp = Recipe.joins(:category).joins(:ingredients).select(select_texto).where("categories.name = 'merienda'").distinct.first
     desayunos = [desayuno_esp, desayuno_esp, desayuno_esp, desayuno_esp, desayuno_esp, desayuno_esp, desayuno_esp]
     daysMap = { "Lunes" => 0, "Martes" => 1, "Miércoles" => 2, "Jueves" => 3, "Viernes" => 4, "Sabado" => 5, "Domingo" => 6 }
 
     meriendas = [merienda_esp, merienda_esp, merienda_esp, merienda_esp, merienda_esp, merienda_esp, merienda_esp]
-    almuerzos = recipes_total.where("categories.name = 'almuerzo'").select("recipes.id as id, recipes.name as recipe_name, recipes.description as recipe_description").shuffle.first(7)
-    cenas = recipes_total.where("categories.name = 'cena'").select("recipes.id as id, recipes.name as recipe_name, recipes.description as recipe_description").shuffle.first(7)
+    almuerzos = Recipe.joins(:category).joins(:ingredients).select(select_texto).where("categories.name = 'almuerzo'").distinct.shuffle.first(7)
+    cenas = Recipe.joins(:category).joins(:ingredients).select(select_texto).where("categories.name = 'cena'").distinct.shuffle.first(7)
     totalFoods = desayunos + meriendas + almuerzos + cenas
     @totales_ingredients = Ingredient.where(recipes: totalFoods.map { |item| item.id }).distinct
 

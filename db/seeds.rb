@@ -132,11 +132,11 @@ recipes_desayunos = Recipe.create([
   },
   {
     name: "Ayuno",
-    description: "",
+    description: "Este es un ayuno. En este momento solo se consumen líquidos para mantenernos hidratados.",
     category: Category.find_by(name: "desayuno"),
-    instructions: "",
-    photo: '',
-    nutrition_facts: "0 calorias",
+    instructions: "Solo debe consumir líquidos",
+    photo: "",
+    nutrition_facts: "Tiene 0 calorias",
   },
 ])
 

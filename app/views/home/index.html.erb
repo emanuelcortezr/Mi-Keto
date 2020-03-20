@@ -1,3 +1,4 @@
+  
 <div class="card-body">
   <ul class="nav nav-pills mb-3 ml-3 mr-3" id="pills-tab" role="tablist">
     <li class="nav-item">
@@ -26,7 +27,7 @@
         </div>
         <div class="row" id="myItems">
           <% @recipes.each do |recipe| %>
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2 col_hide">
               <div class="card mb-4 box-shadow">
                 <img src=<%= recipe.recipe_photo %> class="card-img-top" alt="...">
                 <div class="card-body">
@@ -49,9 +50,9 @@
             <input type="text" id="myFilterDesayuno" class="form-control" onkeyup="myFunctionDesayuno()" placeholder="Busqueda por ..">
           </div>
         </div>
-        <div class="row d-flex justify-content-around" id="myItemsDesayuno">
+        <div class="row" id="myItemsDesayuno">
           <% @desayunos.each do |desayuno| %>
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2 col_hide_d">
               <div class="card mb-5 cardDesayuno">
                 <img src=<%= desayuno.recipe_photo %> class="card-img-top" alt="...">
                 <div class="card-body">
@@ -74,9 +75,9 @@
             <input type="text" id="myFilterMerienda" class="form-control" onkeyup="myFunctionMerienda()" placeholder="Busqueda por ..">
           </div>
         </div>
-        <div class="row d-flex justify-content-around" id="myItemsMerienda">
+        <div class="row" id="myItemsMerienda">
           <% @meriendas.each do |merienda| %>
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2 col_hide_m">
               <div class="card mb-5 cardMerienda">
                 <img src=<%= merienda.recipe_photo %> class="card-img-top" alt="...">
                 <div class="card-body">
@@ -99,9 +100,9 @@
             <input type="text" id="myFilterAlmuerzo" class="form-control" onkeyup="myFunctionAlmuerzo()" placeholder="Busqueda por ..">
           </div>
         </div>
-        <div class="row d-flex justify-content-around" id="myItemsAlmuerzo">
+        <div class="row" id="myItemsAlmuerzo">
           <% @almuerzos.each do |almuerzo| %>
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2 col_hide_a">
               <div class="card mb-5 cardAlmuerzo">
                 <img src=<%= almuerzo.recipe_photo %> class="card-img-top" alt="...">
                 <div class="card-body">
@@ -124,9 +125,9 @@
             <input type="text" id="myFilterCena" class="form-control" onkeyup="myFunctionCena()" placeholder="Busqueda por ..">
           </div>
         </div>
-        <div class="row d-flex justify-content-around" id="myItemsCena">
+        <div class="row" id="myItemsCena">
           <% @cenas.each do |cena| %>
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2 col_hide_c">
               <div class="card mb-5 cardCena">
                 <img src=<%= cena.recipe_photo %> class="card-img-top" alt="...">
                 <div class="card-body">
@@ -240,247 +241,261 @@
   </div>
 </div>
 <script>
-    // console.log(<%= raw @recipes_dtotal.to_json %>);
+  // console.log(<%= raw @recipes_dtotal.to_json %>);
     function myFunction() {
-      var input, filter, cards, cardContainer, h5, title, i;
+      var input, filter, cards, cardContainer, h5, title, i, cols;
       input = document.getElementById("myFilter");
       filter = input.value.toUpperCase();
       cardContainer = document.getElementById("myItems");
       cards = cardContainer.getElementsByClassName("card");
+      cols =  document.getElementsByClassName("col_hide");
       for (i = 0; i < cards.length; i++) {
-        title = cards[i].querySelector(".card-body h5.card-title");
-        if (title.innerText.toUpperCase().indexOf(filter) > -1) {
-          cards[i].style.display = "";
-
-        } else {
-          cards[i].style.display = "none";
-        }
+          title = cards[i].querySelector(".card-body h5.card-title");
+          if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+              cards[i].style.display = "";
+              cols[i].style.display = "";
+          } else {
+              cards[i].style.display = "none";
+              cols[i].style.display = "none";
+          }
       }
     }
-
+  
     function myFunctionDesayuno() {
-      var input, filter, cards, cardContainer, h5, title, i;
+      var input, filter, cards, cardContainer, h5, title, i, cols;
       input = document.getElementById("myFilterDesayuno");
       filter = input.value.toUpperCase();
       cardContainer = document.getElementById("myItemsDesayuno");
       cards = cardContainer.getElementsByClassName("cardDesayuno");
+      cols =  document.getElementsByClassName("col_hide_d");
       for (i = 0; i < cards.length; i++) {
-        title = cards[i].querySelector(".card-body h5.card-title");
-        if (title.innerText.toUpperCase().indexOf(filter) > -1) {
-          cards[i].style.display = "";
-
-        } else {
-          cards[i].style.display = "none";
-        }
+          title = cards[i].querySelector(".card-body h5.card-title");
+          if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+              cards[i].style.display = "";
+              cols[i].style.display = "";
+  
+          } else {
+              cards[i].style.display = "none";
+              cols[i].style.display = "none";
+          }
       }
     }
-
+  
     function myFunctionMerienda() {
-      var input, filter, cards, cardContainer, h5, title, i;
+      var input, filter, cards, cardContainer, h5, title, i, cols;
       input = document.getElementById("myFilterMerienda");
       filter = input.value.toUpperCase();
       cardContainer = document.getElementById("myItemsMerienda");
       cards = cardContainer.getElementsByClassName("cardMerienda");
+      cols =  document.getElementsByClassName("col_hide_m");
       for (i = 0; i < cards.length; i++) {
-        title = cards[i].querySelector(".card-body h5.card-title");
-        if (title.innerText.toUpperCase().indexOf(filter) > -1) {
-          cards[i].style.display = "";
-
-        } else {
-          cards[i].style.display = "none";
-        }
+          title = cards[i].querySelector(".card-body h5.card-title");
+          if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+              cards[i].style.display = "";
+              cols[i].style.display = "";
+  
+          } else {
+              cards[i].style.display = "none";
+              cols[i].style.display = "none";
+          }
       }
     }
-
+  
     function myFunctionAlmuerzo() {
-      var input, filter, cards, cardContainer, h5, title, i;
+      var input, filter, cards, cardContainer, h5, title, i, cols;
       input = document.getElementById("myFilterAlmuerzo");
       filter = input.value.toUpperCase();
       cardContainer = document.getElementById("myItemsAlmuerzo");
       cards = cardContainer.getElementsByClassName("cardAlmuerzo");
+      cols =  document.getElementsByClassName("col_hide_a");
       for (i = 0; i < cards.length; i++) {
-        title = cards[i].querySelector(".card-body h5.card-title");
-        if (title.innerText.toUpperCase().indexOf(filter) > -1) {
-          cards[i].style.display = "";
-
-        } else {
-          cards[i].style.display = "none";
-        }
+          title = cards[i].querySelector(".card-body h5.card-title");
+          if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+              cards[i].style.display = "";
+              cols[i].style.display = "";
+  
+          } else {
+              cards[i].style.display = "none";
+              cols[i].style.display = "none";
+          }
       }
     }
-
+  
     function myFunctionCena() {
-      var input, filter, cards, cardContainer, h5, title, i;
+      var input, filter, cards, cardContainer, h5, title, i, cols;
       input = document.getElementById("myFilterCena");
       filter = input.value.toUpperCase();
       cardContainer = document.getElementById("myItemsCena");
       cards = cardContainer.getElementsByClassName("cardCena");
+      cols =  document.getElementsByClassName("col_hide_c");
       for (i = 0; i < cards.length; i++) {
-        title = cards[i].querySelector(".card-body h5.card-title");
-        if (title.innerText.toUpperCase().indexOf(filter) > -1) {
-          cards[i].style.display = "";
-
-        } else {
-          cards[i].style.display = "none";
-        }
+          title = cards[i].querySelector(".card-body h5.card-title");
+          if (title.innerText.toUpperCase().indexOf(filter) > -1) {
+              cards[i].style.display = "";
+              cols[i].style.display = "";
+  
+          } else {
+              cards[i].style.display = "none";
+              cols[i].style.display = "none";
+          }
       }
     }
-
-    $(document).ready(function () {
-
-      $('.my-button').bind('click', function (event) {
-        event.preventDefault();
-        let valuesIds = JSON.parse(event.target.name);
-        $.ajax({
-          type: "POST",
-          url: '/template_modal_all',
-          beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
-          contentType: 'application/json',
-          dataType: 'json',
-          data: JSON.stringify({ "valuesIds": valuesIds }),
-          cache: true,
-          success: function (response) {
-            console.log(response)
-            let htmlTemplateTitle = `<div class="demo-container">
-              <p>${response.recipes[0].name}</p>
-              </div>`;
-                        let htmlTemplate = `<div class="demo-container">
-              <p>Receta: ${response.recipes[0].name}</em></p>
-              <p>Descripción: ${response.recipes[0].description}</em></p>
-              <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
-              <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
-              <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
-              </div>`;
-
-            $('#exampleModalScrollable').find('.modal-title').html(htmlTemplateTitle)
-            $('#exampleModalScrollable').find('.modal-body').html(htmlTemplate)
-          }
-        })
-      });
-
-      $('.my-button-desayuno').bind('click', function (event) {
-        event.preventDefault();
-        let valuesIds = JSON.parse(event.target.name);
-        $.ajax({
-          type: "POST",
-          url: '/template_modal_desayuno',
-          beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
-          contentType: 'application/json',
-          dataType: 'json',
-          data: JSON.stringify({ "valuesIds": valuesIds }),
-          cache: true,
-          success: function (response) {
-            console.log(response)
-            let htmlTemplateTitle = `<div class="demo-container">
-  <p>${response.recipes[0].name}</p>
-  </div>`;
-            let htmlTemplate = `<div class="demo-container">
-  <p>Receta: ${response.recipes[0].name}</em></p>
-  <p>Descripción: ${response.recipes[0].description}</em></p>
-  <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
-  <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
-  <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
-  </div>`;
-
-            $('#exampleModalScrollableDesayunos').find('.modal-title').html(htmlTemplateTitle)
-            $('#exampleModalScrollableDesayunos').find('.modal-body').html(htmlTemplate)
-          }
-        })
-      });
-
-      $('.my-button-merienda').bind('click', function (event) {
-        event.preventDefault();
-        let valuesIds = JSON.parse(event.target.name);
-        $.ajax({
-          type: "POST",
-          url: '/template_modal_merienda',
-          beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
-          contentType: 'application/json',
-          dataType: 'json',
-          data: JSON.stringify({ "valuesIds": valuesIds }),
-          cache: true,
-          success: function (response) {
-            console.log(response)
-            let htmlTemplateTitle = `<div class="demo-container">
-            <p>${response.recipes[0].name}</p>
+  
+    $(document).ready(function() {
+  
+      $('.my-button').bind('click', function(event) {
+          event.preventDefault();
+          let valuesIds = JSON.parse(event.target.name);
+          $.ajax({
+            type: "POST",
+            url: '/template_modal_all',
+            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+            contentType: 'application/json',
+            dataType: 'json',
+            data : JSON.stringify({ "valuesIds" : valuesIds}),
+            cache: true,
+            success: function(response) {
+              console.log(response)
+               let htmlTemplateTitle = `<div class="demo-container">
+                <p>${response.recipes[0].name}</p>
             </div>`;
-            let htmlTemplate = `<div class="demo-container">
-            <p>Receta: ${response.recipes[0].name}</em></p>
-            <p>Descripción: ${response.recipes[0].description}</em></p>
-            <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
-            <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
-            <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
+              let htmlTemplate = `<div class="demo-container">
+                <p>Receta: ${response.recipes[0].name}</em></p>
+                <p>Descripción: ${response.recipes[0].description}</em></p>
+                <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
+                <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
+                <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
             </div>`;
-
-            $('#exampleModalScrollableMeriendas').find('.modal-title').html(htmlTemplateTitle)
-            $('#exampleModalScrollableMeriendas').find('.modal-body').html(htmlTemplate)
-          }
-        })
-      });
-
-      $('.my-button-almuerzo').bind('click', function (event) {
-        event.preventDefault();
-        let valuesIds = JSON.parse(event.target.name);
-        $.ajax({
-          type: "POST",
-          url: '/template_modal_almuerzo',
-          beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
-          contentType: 'application/json',
-          dataType: 'json',
-          data: JSON.stringify({ "valuesIds": valuesIds }),
-          cache: true,
-          success: function (response) {
-            console.log(response)
-            let htmlTemplateTitle = `<div class="demo-container">
-  <p>${response.recipes[0].name}</p>
-  </div>`;
-            let htmlTemplate = `<div class="demo-container">
-  <p>Receta: ${response.recipes[0].name}</em></p>
-  <p>Descripción: ${response.recipes[0].description}</em></p>
-  <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
-  <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
-  <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
-  </div>`;
-
-            $('#exampleModalScrollableAlmuerzos').find('.modal-title').html(htmlTemplateTitle)
-            $('#exampleModalScrollableAlmuerzos').find('.modal-body').html(htmlTemplate)
-          }
-        })
-      });
-
-      $('.my-button-cena').bind('click', function (event) {
-        event.preventDefault();
-        let valuesIds = JSON.parse(event.target.name);
-        $.ajax({
-          type: "POST",
-          url: '/template_modal_cena',
-          beforeSend: function (xhr) { xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content')) },
-          contentType: 'application/json',
-          dataType: 'json',
-          data: JSON.stringify({ "valuesIds": valuesIds }),
-          cache: true,
-          success: function (response) {
-            console.log(response)
-            let htmlTemplateTitle = `<div class="demo-container">
-  <p>${response.recipes[0].name}</p>
-  </div>`;
-            let htmlTemplate = `<div class="demo-container">
-  <p>Receta: ${response.recipes[0].name}</em></p>
-  <p>Descripción: ${response.recipes[0].description}</em></p>
-  <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
-  <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
-  <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
-  </div>`;
-
-            $('#exampleModalScrollableCenas').find('.modal-title').html(htmlTemplateTitle)
-            $('#exampleModalScrollableCenas').find('.modal-body').html(htmlTemplate)
-          }
-        })
-      });
+  
+              $('#exampleModalScrollable').find('.modal-title').html(htmlTemplateTitle)
+              $('#exampleModalScrollable').find('.modal-body').html(htmlTemplate)
+            }
+          })
+        });
+  
+        $('.my-button-desayuno').bind('click', function(event) {
+          event.preventDefault();
+          let valuesIds = JSON.parse(event.target.name);
+          $.ajax({
+            type: "POST",
+            url: '/template_modal_desayuno',
+            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+            contentType: 'application/json',
+            dataType: 'json',
+            data : JSON.stringify({ "valuesIds" : valuesIds}),
+            cache: true,
+            success: function(response) {
+              console.log(response)
+               let htmlTemplateTitle = `<div class="demo-container">
+                <p>${response.recipes[0].name}</p>
+            </div>`;
+              let htmlTemplate = `<div class="demo-container">
+                <p>Receta: ${response.recipes[0].name}</em></p>
+                <p>Descripción: ${response.recipes[0].description}</em></p>
+                <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
+                <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
+                <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
+            </div>`;
+  
+              $('#exampleModalScrollableDesayunos').find('.modal-title').html(htmlTemplateTitle)
+              $('#exampleModalScrollableDesayunos').find('.modal-body').html(htmlTemplate)
+            }
+          })
+        });
+  
+        $('.my-button-merienda').bind('click', function(event) {
+          event.preventDefault();
+          let valuesIds = JSON.parse(event.target.name);
+          $.ajax({
+            type: "POST",
+            url: '/template_modal_merienda',
+            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+            contentType: 'application/json',
+            dataType: 'json',
+            data : JSON.stringify({ "valuesIds" : valuesIds}),
+            cache: true,
+            success: function(response) {
+              console.log(response)
+               let htmlTemplateTitle = `<div class="demo-container">
+                <p>${response.recipes[0].name}</p>
+            </div>`;
+              let htmlTemplate = `<div class="demo-container">
+                <p>Receta: ${response.recipes[0].name}</em></p>
+                <p>Descripción: ${response.recipes[0].description}</em></p>
+                <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
+                <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
+                <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
+            </div>`;
+  
+              $('#exampleModalScrollableMeriendas').find('.modal-title').html(htmlTemplateTitle)
+              $('#exampleModalScrollableMeriendas').find('.modal-body').html(htmlTemplate)
+            }
+          })
+        });
+  
+        $('.my-button-almuerzo').bind('click', function(event) {
+          event.preventDefault();
+          let valuesIds = JSON.parse(event.target.name);
+          $.ajax({
+            type: "POST",
+            url: '/template_modal_almuerzo',
+            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+            contentType: 'application/json',
+            dataType: 'json',
+            data : JSON.stringify({ "valuesIds" : valuesIds}),
+            cache: true,
+            success: function(response) {
+              console.log(response)
+               let htmlTemplateTitle = `<div class="demo-container">
+                <p>${response.recipes[0].name}</p>
+            </div>`;
+              let htmlTemplate = `<div class="demo-container">
+                <p>Receta: ${response.recipes[0].name}</em></p>
+                <p>Descripción: ${response.recipes[0].description}</em></p>
+                <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
+                <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
+                <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
+            </div>`;
+  
+              $('#exampleModalScrollableAlmuerzos').find('.modal-title').html(htmlTemplateTitle)
+              $('#exampleModalScrollableAlmuerzos').find('.modal-body').html(htmlTemplate)
+            }
+          })
+        });
+  
+        $('.my-button-cena').bind('click', function(event) {
+          event.preventDefault();
+          let valuesIds = JSON.parse(event.target.name);
+          $.ajax({
+            type: "POST",
+            url: '/template_modal_cena',
+            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+            contentType: 'application/json',
+            dataType: 'json',
+            data : JSON.stringify({ "valuesIds" : valuesIds}),
+            cache: true,
+            success: function(response) {
+              console.log(response)
+               let htmlTemplateTitle = `<div class="demo-container">
+                <p>${response.recipes[0].name}</p>
+            </div>`;
+              let htmlTemplate = `<div class="demo-container">
+                <p>Receta: ${response.recipes[0].name}</em></p>
+                <p>Descripción: ${response.recipes[0].description}</em></p>
+                <p>Ingredientes: ${response.recipes[0].ingredients}</em></p>
+                <p>Instrucciones: ${response.recipes[0].instructions}</em></p>
+                <p>Informacion nutricional: ${response.recipes[0].nutrition_facts}</em></p>
+            </div>`;
+  
+              $('#exampleModalScrollableCenas').find('.modal-title').html(htmlTemplateTitle)
+              $('#exampleModalScrollableCenas').find('.modal-body').html(htmlTemplate)
+            }
+          })
+        });
     });
 </script>
 <style>
   .card {
-  height: 42em !important;
+    height: 38em !important;
   }
 </style>

@@ -46,8 +46,8 @@ class HomeController < ApplicationController
         "nutrition_facts" => item.nutrition_facts,
         "ingredients" => Ingredient.find(RecipeIngredient.where(recipe: item).pluck("ingredient_id")).pluck("name") }
     }
-    recipe_ingredients = RecipeIngredient.where(recipe: valuesRecipesRandom).pluck("ingredient_id")
-    ingredients = Ingredient.find(recipe_ingredients)
+    # recipe_ingredients = RecipeIngredient.where(recipe: valuesRecipesRandom).pluck("ingredient_id")
+    # ingredients = Ingredient.find(recipe_ingredients)
     respond_to do |format|
       format.json {
         render json: { :recipes => recipes_total }
