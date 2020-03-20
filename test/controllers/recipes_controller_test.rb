@@ -1,9 +1,21 @@
-require 'test_helper'
+require "test_helper"
 
 class RecipesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
-    @recipe = recipes(:one)
+    @recipe = recipes(:recipe_one)
+    @category = categories(:category_one)
+    @user = users(:manuel)
+    @recipe2 = recipes(:recipe_two)
+    sign_in(@user)
   end
+
+  test "recipe is not created without a name" do
+    recipe = Recipe.new
+    assert_not recipe.save
+  end
+
 
   test "should get index" do
     get recipes_url
@@ -13,14 +25,6 @@ class RecipesControllerTest < ActionDispatch::IntegrationTest
   test "should get new" do
     get new_recipe_url
     assert_response :success
-  end
-
-  test "should create recipe" do
-    assert_difference('Recipe.count') do
-      post recipes_url, params: { recipe: { description: @recipe.description, name: @recipe.name } }
-    end
-
-    assert_redirected_to recipe_url(Recipe.last)
   end
 
   test "should show recipe" do
@@ -34,15 +38,7 @@ class RecipesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update recipe" do
-    patch recipe_url(@recipe), params: { recipe: { description: @recipe.description, name: @recipe.name } }
+    patch recipe_url(@recipe), params: { recipe: { name: @recipe.name + "edited" } }
     assert_redirected_to recipe_url(@recipe)
-  end
-
-  test "should destroy recipe" do
-    assert_difference('Recipe.count', -1) do
-      delete recipe_url(@recipe)
-    end
-
-    assert_redirected_to recipes_url
   end
 end

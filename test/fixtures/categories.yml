@@ -1,7 +1,4 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  type: 
-
-two:
-  type: 
+category_one:
+  name: "Categoria test 1"

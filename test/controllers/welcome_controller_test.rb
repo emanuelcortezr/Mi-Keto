@@ -1,7 +1,14 @@
-require 'test_helper'
+require "test_helper"
 
 class WelcomeControllerTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
+  include Devise::Test::IntegrationHelpers
+
+  setup do
+    @user = users(:manuel)
+    sign_in(@user)
+  end
+  
+  test "the truth" do
+    assert true
+  end
 end

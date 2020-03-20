@@ -1,8 +1,12 @@
 require 'test_helper'
 
 class MeasureUnitsControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
   setup do
-    @measure_unit = measure_units(:one)
+    @measure_unit = measure_units(:m_unit_one)
+    @user = users(:manuel)
+    sign_in(@user)
   end
 
   test "should get index" do
@@ -17,7 +21,7 @@ class MeasureUnitsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create measure_unit" do
     assert_difference('MeasureUnit.count') do
-      post measure_units_url, params: { measure_unit: { description: @measure_unit.description } }
+      post measure_units_url, params: { measure_unit: { name: @measure_unit.name } }
     end
 
     assert_redirected_to measure_unit_url(MeasureUnit.last)
@@ -34,15 +38,7 @@ class MeasureUnitsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update measure_unit" do
-    patch measure_unit_url(@measure_unit), params: { measure_unit: { description: @measure_unit.description } }
+    patch measure_unit_url(@measure_unit), params: { measure_unit: { name: @measure_unit.name + "Edited" } }
     assert_redirected_to measure_unit_url(@measure_unit)
-  end
-
-  test "should destroy measure_unit" do
-    assert_difference('MeasureUnit.count', -1) do
-      delete measure_unit_url(@measure_unit)
-    end
-
-    assert_redirected_to measure_units_url
   end
 end

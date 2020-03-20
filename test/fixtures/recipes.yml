@@ -1,9 +1,16 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  description: MyText
+recipe_one:
+  name: "MyString"
+  description: "MyText"
+  instructions: "MyText"
+  nutrition_facts: "MyText"
+  description: "MyText"
+  category: category_one
 
-two:
-  name: MyString
-  description: MyText
+recipe_two:
+  name: "MyString2"
+  instructions: "MyText1"
+  nutrition_facts: "MyText2"
+  description: "MyText3"
+  category: category_one

@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class RecipesTest < ApplicationSystemTestCase
   setup do
-    @recipe = recipes(:one)
+    @recipe = recipes(:recipe_one)
   end
 
   test "visiting the index" do
@@ -16,6 +16,10 @@ class RecipesTest < ApplicationSystemTestCase
 
     fill_in "Description", with: @recipe.description
     fill_in "Name", with: @recipe.name
+    fill_in "Category", with: @recipe.category_id
+    fill_in "Category", with: @recipe.category_id
+    fill_in "Instructions", with: @recipe.instructions
+    fill_in "Nutrition_facts", with: @recipe.nutrition_facts
     click_on "Create Recipe"
 
     assert_text "Recipe was successfully created"

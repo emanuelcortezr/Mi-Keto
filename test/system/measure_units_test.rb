@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class MeasureUnitsTest < ApplicationSystemTestCase
   setup do
-    @measure_unit = measure_units(:one)
+    @measure_unit = measure_units(:m_unit_one)
   end
 
   test "visiting the index" do
@@ -14,7 +14,7 @@ class MeasureUnitsTest < ApplicationSystemTestCase
     visit measure_units_url
     click_on "New Measure Unit"
 
-    fill_in "Description", with: @measure_unit.description
+    fill_in "Name", with: @measure_unit.name
     click_on "Create Measure unit"
 
     assert_text "Measure unit was successfully created"
@@ -25,7 +25,7 @@ class MeasureUnitsTest < ApplicationSystemTestCase
     visit measure_units_url
     click_on "Edit", match: :first
 
-    fill_in "Description", with: @measure_unit.description
+    fill_in "Name", with: @measure_unit.name
     click_on "Update Measure unit"
 
     assert_text "Measure unit was successfully updated"
